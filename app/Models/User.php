@@ -30,6 +30,8 @@ class User extends Authenticatable
         'password',
         'role',
         'google_id',
+        'daily_conversions',
+        'last_conversion_date',
     ];
 
     /**
@@ -53,6 +55,8 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'role' => 'integer',
+            'daily_conversions' => 'integer',
+            'last_conversion_date' => 'date',
         ];
     }
 
@@ -78,5 +82,78 @@ class User extends Authenticatable
     public function isAdmin(): bool
     {
         return $this->role === self::ROLE_ADMIN;
+    }
+
+    /**
+     * Get remaining daily conversions
+     */
+    public function getRemainingConversions(): string
+    {
+        if ($this->isPremium() || $this->isAdmin()) {
+            return 'Tak Terbatas';
+        }
+
+        // Reset counter if it's a new day
+        $today = now()->format('Y-m-d');
+        if ($this->last_conversion_date === null || $this->last_conversion_date->format('Y-m-d') !== $today) {
+            $this->daily_conversions = 0;
+            $this->last_conversion_date = now();
+            $this->save();
+        }
+
+        return (5 - $this->daily_conversions) . '/5';
+    }
+
+    /**
+     * Record a conversion usage
+     */
+    public function recordConversion(): bool
+    {
+        // Premium and admin users have unlimited conversions
+        if ($this->isPremium() || $this->isAdmin()) {
+            return true;
+        }
+
+        // Reset counter if it's a new day
+        $today = now()->format('Y-m-d');
+        if ($this->last_conversion_date === null || $this->last_conversion_date->format('Y-m-d') !== $today) {
+            $this->daily_conversions = 0;
+            $this->last_conversion_date = now();
+        }
+
+        // Check if user has reached their daily limit
+        if ($this->daily_conversions >= 5) {
+            return false;
+        }
+
+        // Increment usage and update date
+        $this->daily_conversions += 1;
+        $this->last_conversion_date = now();
+        $this->save();
+
+        return true;
+    }
+
+    /**
+     * Check if user can perform a conversion
+     */
+    public function canConvert(): bool
+    {
+        // Premium and admin users have unlimited conversions
+        if ($this->isPremium() || $this->isAdmin()) {
+            return true;
+        }
+
+        // Reset counter if it's a new day
+        $today = now()->format('Y-m-d');
+        if ($this->last_conversion_date === null || $this->last_conversion_date->format('Y-m-d') !== $today) {
+            $this->daily_conversions = 0;
+            $this->last_conversion_date = now();
+            $this->save();
+            return true;
+        }
+
+        // Check if user has reached their daily limit
+        return $this->daily_conversions < 5;
     }
 }

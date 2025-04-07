@@ -86,7 +86,8 @@
                                 </li>
                             </ul>
 
-                            <a href="{{ route('convert.pdf.form') }}" class="btn btn-primary">Konversi PDF ke Word</a>
+                            <a href="{{ route('convert.pdf-to-word.form') }}" class="btn btn-primary">Konversi PDF ke
+                                Word</a>
                         </div>
                     </div>
 
@@ -126,7 +127,8 @@
                                 </li>
                             </ul>
 
-                            <a href="{{ route('convert.pdf.form') }}" class="btn btn-primary">Konversi Word ke PDF</a>
+                            <a href="{{ route('convert.word-to-pdf.form') }}" class="btn btn-primary">Konversi Word ke
+                                PDF</a>
                         </div>
                     </div>
                 @else

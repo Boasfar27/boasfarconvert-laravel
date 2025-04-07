@@ -26,8 +26,9 @@
                         </p>
                     </div>
                     <div class="profile-menu">
-                        <a href="#profile-info" class="profile-menu-item active">Informasi Profil</a>
-                        <a href="#security" class="profile-menu-item">Keamanan</a>
+                        <a href="#profile-info" class="profile-menu-item active" data-section="profile-info">Informasi
+                            Profil</a>
+                        <a href="#security" class="profile-menu-item" data-section="security">Keamanan</a>
                         @if (!Auth::user()->isPremium() && !Auth::user()->isAdmin())
                             <a href="{{ route('premium.index') }}" class="profile-menu-item premium-link">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="profile-menu-icon" viewBox="0 0 20 20"
@@ -42,11 +43,34 @@
                 </div>
 
                 <div class="profile-content">
-                    <div id="profile-info" class="profile-section">
+                    <!-- Status Messages -->
+                    @if (session('status') === 'profile-updated')
+                        <div class="alert alert-success">
+                            <p>Profil berhasil diperbarui!</p>
+                        </div>
+                    @endif
+
+                    @if (session('status') === 'password-updated')
+                        <div class="alert alert-success">
+                            <p>Password berhasil diperbarui!</p>
+                        </div>
+                    @endif
+
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
+                    <div id="profile-info" class="profile-section active">
                         <h3 class="section-title">Informasi Profil</h3>
                         <p class="section-description">Update informasi profil Anda</p>
 
-                        <form class="profile-form" method="POST" action="#">
+                        <form class="profile-form" method="POST" action="{{ route('profile.update') }}">
                             @csrf
                             @method('PUT')
 
@@ -74,7 +98,7 @@
                         <h3 class="section-title">Keamanan</h3>
                         <p class="section-description">Update password akun Anda</p>
 
-                        <form class="profile-form" method="POST" action="#">
+                        <form class="profile-form" method="POST" action="{{ route('profile.password.update') }}">
                             @csrf
                             @method('PUT')
 
@@ -186,34 +210,40 @@
             }
         }
 
-        // Scroll to sections when clicking on sidebar menu items
+        // Tab switching with section visibility
         document.addEventListener('DOMContentLoaded', function() {
             const menuItems = document.querySelectorAll('.profile-menu-item:not(.premium-link)');
+            const sections = document.querySelectorAll('.profile-section');
+
+            // Initial active state
+            document.querySelector('.profile-section').classList.add('active');
 
             menuItems.forEach(item => {
                 item.addEventListener('click', function(e) {
                     if (this.getAttribute('href').startsWith('#')) {
                         e.preventDefault();
 
-                        // Remove active class from all items
+                        // Remove active class from all items and sections
                         menuItems.forEach(i => i.classList.remove('active'));
+                        sections.forEach(s => s.classList.remove('active'));
 
                         // Add active class to clicked item
                         this.classList.add('active');
 
-                        // Scroll to the section
-                        const targetId = this.getAttribute('href');
-                        const targetSection = document.querySelector(targetId);
-
+                        // Get target section and add active class
+                        const targetId = this.getAttribute('href').substring(1);
+                        const targetSection = document.getElementById(targetId);
                         if (targetSection) {
-                            window.scrollTo({
-                                top: targetSection.offsetTop - 100,
-                                behavior: 'smooth'
-                            });
+                            targetSection.classList.add('active');
                         }
                     }
                 });
             });
+
+            // Show security tab if there are password errors
+            @if ($errors->hasAny(['current_password', 'password', 'password_confirmation']))
+                document.querySelector('[data-section="security"]').click();
+            @endif
         });
     </script>
 @endpush

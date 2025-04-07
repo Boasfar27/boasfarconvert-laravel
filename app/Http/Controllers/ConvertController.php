@@ -28,11 +28,18 @@ class ConvertController extends Controller
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
+        // Check if user can convert
+        if (!auth()->user()->canConvert()) {
+            return redirect()->back()->with([
+                'error' => 'Anda telah mencapai batas konversi harian. Upgrade ke premium untuk konversi tak terbatas.',
+            ]);
+        }
+
         $image = $request->file('image');
         $originalName = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
-        $manager = new ImageManager(['driver' => 'gd']);
+        $manager = new ImageManager(new \Intervention\Image\Drivers\Gd\Driver());
         
-        $img = $manager->make($image);
+        $img = $manager->read($image);
         
         // Create WebP image
         $webpName = $originalName . '_' . time() . '.webp';
@@ -43,7 +50,12 @@ class ConvertController extends Controller
             File::makeDirectory(storage_path('app/public/converted/webp'), 0755, true);
         }
         
-        $img->save($webpPath, 80, 'webp');
+        // Save as WebP format
+        $img->encodeByExtension('webp', 80)
+            ->save($webpPath);
+        
+        // Record conversion usage
+        auth()->user()->recordConversion();
         
         return redirect()->back()->with([
             'success' => 'Gambar berhasil dikonversi ke WebP!',
@@ -53,11 +65,19 @@ class ConvertController extends Controller
     }
 
     /**
-     * Display the form to upload PDF files
+     * Display the PDF to Word conversion form
      */
-    public function showPdfForm()
+    public function showPdfToWordForm()
     {
-        return view('convert.pdf');
+        return view('convert.pdf-to-word');
+    }
+
+    /**
+     * Display the Word to PDF conversion form
+     */
+    public function showWordToPdfForm()
+    {
+        return view('convert.word-to-pdf');
     }
 
     /**
@@ -68,6 +88,16 @@ class ConvertController extends Controller
         $request->validate([
             'pdf' => 'required|mimes:pdf|max:10240',
         ]);
+
+        // Check if user can convert
+        if (!auth()->user()->canConvert()) {
+            return redirect()->back()->with([
+                'error' => 'Anda telah mencapai batas konversi harian. Upgrade ke premium untuk konversi tak terbatas.',
+            ]);
+        }
+        
+        // Record conversion usage
+        auth()->user()->recordConversion();
 
         // Implementation will need a library like PhpWord
         // This is just a placeholder - actual implementation requires a third-party service
@@ -86,6 +116,16 @@ class ConvertController extends Controller
         $request->validate([
             'word' => 'required|mimes:doc,docx|max:10240',
         ]);
+
+        // Check if user can convert
+        if (!auth()->user()->canConvert()) {
+            return redirect()->back()->with([
+                'error' => 'Anda telah mencapai batas konversi harian. Upgrade ke premium untuk konversi tak terbatas.',
+            ]);
+        }
+        
+        // Record conversion usage
+        auth()->user()->recordConversion();
 
         // Implementation will need a library like PhpWord
         // This is just a placeholder - actual implementation requires a third-party service

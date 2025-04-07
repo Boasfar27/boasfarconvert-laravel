@@ -3,6 +3,8 @@
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\ConvertController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Middleware\CheckRole;
 use Illuminate\Support\Facades\Route;
 
 // Public routes
@@ -36,9 +38,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', function () {
         return view('profile.edit');
     })->name('profile.edit');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password.update');
     
     // User routes
-    Route::middleware('role:user,premium,admin')->group(function () {
+    Route::middleware(CheckRole::class . ':user,premium,admin')->group(function () {
         Route::get('/convert', function () {
             return view('convert.index');
         })->name('convert.index');
@@ -48,22 +52,23 @@ Route::middleware('auth')->group(function () {
         Route::post('/convert/image', [ConvertController::class, 'convertImage'])->name('convert.image');
         
         // PDF conversion (restricted to premium and admin users)
-        Route::middleware('role:premium,admin')->group(function () {
-            Route::get('/convert/pdf', [ConvertController::class, 'showPdfForm'])->name('convert.pdf.form');
+        Route::middleware(CheckRole::class . ':premium,admin')->group(function () {
+            Route::get('/convert/pdf-to-word', [ConvertController::class, 'showPdfToWordForm'])->name('convert.pdf-to-word.form');
+            Route::get('/convert/word-to-pdf', [ConvertController::class, 'showWordToPdfForm'])->name('convert.word-to-pdf.form');
             Route::post('/convert/pdf-to-word', [ConvertController::class, 'pdfToWord'])->name('convert.pdf-to-word');
             Route::post('/convert/word-to-pdf', [ConvertController::class, 'wordToPdf'])->name('convert.word-to-pdf');
         });
     });
     
     // Premium user routes
-    Route::middleware('role:premium,admin')->group(function () {
+    Route::middleware(CheckRole::class . ':premium,admin')->group(function () {
         Route::get('/premium', function () {
             return view('premium.index');
         })->name('premium.index');
     });
     
     // Admin routes
-    Route::middleware('role:admin')->group(function () {
+    Route::middleware(CheckRole::class . ':admin')->group(function () {
         Route::get('/admin', function () {
             return view('admin.index');
         })->name('admin.index');

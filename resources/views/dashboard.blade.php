@@ -19,7 +19,7 @@
                     <div class="stat-content">
                         <h3 class="stat-title">Sisa Konversi</h3>
                         <p class="stat-value">
-                            {{ Auth::user()->isPremium() || Auth::user()->isAdmin() ? 'Tak Terbatas' : '5/hari' }}</p>
+                            {{ Auth::user()->getRemainingConversions() }}</p>
                     </div>
                 </div>
 
@@ -70,7 +70,7 @@
                         <h3 class="feature-title">PDF ke Word</h3>
                         <p class="feature-description">Konversi dokumen PDF menjadi file Word yang dapat diedit dengan
                             mempertahankan format asli</p>
-                        <a href="{{ route('convert.pdf.form') }}" class="btn btn-primary">Konversi Dokumen</a>
+                        <a href="{{ route('convert.pdf-to-word.form') }}" class="btn btn-primary">Konversi Dokumen</a>
                     </div>
 
                     <div class="feature-card dashboard-card">
@@ -83,7 +83,7 @@
                         <h3 class="feature-title">Word ke PDF</h3>
                         <p class="feature-description">Konversi file Word menjadi PDF profesional dengan layout yang
                             sempurna</p>
-                        <a href="{{ route('convert.pdf.form') }}" class="btn btn-primary">Konversi Dokumen</a>
+                        <a href="{{ route('convert.word-to-pdf.form') }}" class="btn btn-primary">Konversi Dokumen</a>
                     </div>
                 @else
                     <div class="feature-card dashboard-card premium-locked">

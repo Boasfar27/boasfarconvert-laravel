@@ -1,30 +1,39 @@
-@extends('layouts.app')
+@extends('layouts.master')
 
 @section('title', 'Konversi Gambar')
 
 @section('content')
-    <div class="card">
-        <h1 class="text-2xl font-bold mb-2">Konversi Gambar ke WebP</h1>
-        <p class="text-gray-600 mb-6">Optimalkan gambar Anda untuk web dengan format WebP yang lebih ringan</p>
+    <div class="convert-container">
+        <h1 class="convert-heading">Konversi Gambar ke WebP</h1>
+        <p class="convert-description">Optimalkan gambar Anda untuk web dengan format WebP yang lebih ringan</p>
+
+        @if (session('error'))
+            <div class="convert-error">
+                <h3 class="convert-error-title">Batas Konversi Tercapai</h3>
+                <p class="convert-error-message">{{ session('error') }}</p>
+                <a href="{{ route('premium') }}" class="btn btn-primary" style="margin-top: 1rem;">
+                    Upgrade ke Premium
+                </a>
+            </div>
+        @endif
 
         @if (session('webp_path'))
-            <div class="mb-8 bg-green-50 p-6 rounded-lg border border-green-200">
-                <h3 class="text-lg font-semibold text-green-700 mb-4">Konversi Berhasil!</h3>
+            <div class="convert-success">
+                <h3 class="convert-success-title">Konversi Berhasil!</h3>
 
-                <div class="flex flex-col md:flex-row gap-6 items-center">
-                    <div class="flex-1">
-                        <img src="{{ session('webp_path') }}" alt="Converted WebP" class="max-w-full h-auto rounded shadow-md">
+                <div class="convert-result">
+                    <div class="convert-result-image">
+                        <img src="{{ session('webp_path') }}" alt="Converted WebP">
                     </div>
-                    <div class="flex-1">
-                        <p class="text-green-700 mb-2">Gambar WebP telah dibuat:</p>
-                        <p class="font-medium mb-4">{{ session('webp_name') }}</p>
+                    <div class="convert-result-info">
+                        <p class="convert-result-label">Gambar WebP telah dibuat:</p>
+                        <p class="convert-result-filename">{{ session('webp_name') }}</p>
 
-                        <a href="{{ session('webp_path') }}" download="{{ session('webp_name') }}"
-                            class="btn-primary block text-center mb-2">
+                        <a href="{{ session('webp_path') }}" download="{{ session('webp_name') }}" class="btn btn-primary">
                             Unduh Gambar WebP
                         </a>
 
-                        <a href="{{ route('convert.image.form') }}" class="btn-secondary block text-center">
+                        <a href="{{ route('convert.image.form') }}" class="btn btn-secondary" style="margin-top: 10px;">
                             Konversi Gambar Lain
                         </a>
                     </div>
@@ -32,81 +41,73 @@
             </div>
         @endif
 
-        <form action="{{ route('convert.image') }}" method="POST" enctype="multipart/form-data" class="max-w-lg mx-auto">
+        <form action="{{ route('convert.image') }}" method="POST" enctype="multipart/form-data" class="convert-form">
             @csrf
 
-            <div class="mb-6">
-                <label for="image" class="block text-gray-700 mb-2">Pilih Gambar (JPG/PNG)</label>
-                <div
-                    class="border-2 border-dashed border-gray-300 rounded-md p-6 text-center hover:border-blue-400 transition-colors">
+            <div class="form-group">
+                <label for="image" class="form-label">Pilih Gambar (JPG/PNG)</label>
+                <div class="file-upload-container" id="dropzone">
                     <input type="file" name="image" id="image" accept="image/jpeg,image/jpg,image/png"
-                        class="hidden" required>
-                    <label for="image" class="cursor-pointer">
-                        <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                        </svg>
-                        <p class="mt-1 text-sm text-gray-600">Klik untuk memilih gambar atau seret gambar ke sini</p>
-                        <p class="mt-1 text-xs text-gray-500">Maksimal ukuran 2MB</p>
-                    </label>
-                    <p id="file-name" class="mt-2 text-sm text-blue-600 hidden"></p>
+                        class="file-upload" style="display: none;" required>
+
+                    <svg class="file-upload-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    <p class="file-upload-text">Klik untuk memilih gambar atau seret gambar ke sini</p>
+                    <p class="file-upload-hint">Maksimal ukuran 2MB</p>
+                    <p id="file-name" class="file-upload-name" style="display: none;"></p>
                 </div>
                 @error('image')
-                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                    <p style="color: #ef4444; font-size: 0.875rem; margin-top: 0.5rem;">{{ $message }}</p>
                 @enderror
             </div>
 
-            <div class="text-center">
-                <button type="submit" class="btn-primary px-8">Konversi ke WebP</button>
+            <div class="form-submit">
+                <button type="submit" class="btn btn-primary">Konversi ke WebP</button>
             </div>
         </form>
 
-        <div class="mt-12 bg-blue-50 p-6 rounded-lg">
-            <h3 class="text-lg font-semibold text-blue-700 mb-2">Kenapa WebP?</h3>
+        <div class="convert-features">
+            <h3 class="convert-features-title">Kenapa WebP?</h3>
 
-            <div class="space-y-4">
-                <div class="flex">
-                    <div class="flex-shrink-0">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500 mt-1" fill="none"
-                            viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                    </div>
-                    <div class="ml-3">
-                        <h4 class="text-base font-medium text-blue-800">Ukuran File Lebih Kecil</h4>
-                        <p class="text-blue-600">WebP bisa 25-34% lebih kecil daripada JPG dan PNG dengan kualitas visual
+            <div class="feature-list">
+                <div class="feature-item">
+                    <svg class="feature-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <div class="feature-content">
+                        <h4 class="feature-title">Ukuran File Lebih Kecil</h4>
+                        <p class="feature-text">WebP bisa 25-34% lebih kecil daripada JPG dan PNG dengan kualitas visual
                             yang sama.</p>
                     </div>
                 </div>
 
-                <div class="flex">
-                    <div class="flex-shrink-0">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500 mt-1" fill="none"
-                            viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                    </div>
-                    <div class="ml-3">
-                        <h4 class="text-base font-medium text-blue-800">Kecepatan Loading</h4>
-                        <p class="text-blue-600">Website dengan gambar WebP akan loading lebih cepat, meningkatkan
-                            pengalaman pengguna dan SEO.</p>
+                <div class="feature-item">
+                    <svg class="feature-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <div class="feature-content">
+                        <h4 class="feature-title">Kecepatan Loading</h4>
+                        <p class="feature-text">Website dengan gambar WebP akan loading lebih cepat, meningkatkan pengalaman
+                            pengguna dan SEO.</p>
                     </div>
                 </div>
 
-                <div class="flex">
-                    <div class="flex-shrink-0">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500 mt-1" fill="none"
-                            viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                    </div>
-                    <div class="ml-3">
-                        <h4 class="text-base font-medium text-blue-800">Dukungan Browser Modern</h4>
-                        <p class="text-blue-600">WebP didukung oleh semua browser modern seperti Chrome, Firefox, Edge, dan
+                <div class="feature-item">
+                    <svg class="feature-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <div class="feature-content">
+                        <h4 class="feature-title">Dukungan Browser Modern</h4>
+                        <p class="feature-text">WebP didukung oleh semua browser modern seperti Chrome, Firefox, Edge, dan
                             Safari.</p>
                     </div>
                 </div>
@@ -119,13 +120,61 @@
             document.addEventListener('DOMContentLoaded', function() {
                 const fileInput = document.getElementById('image');
                 const fileNameDisplay = document.getElementById('file-name');
+                const dropzone = document.getElementById('dropzone');
 
+                // Handle file selection via input
                 fileInput.addEventListener('change', function() {
                     if (this.files && this.files[0]) {
                         fileNameDisplay.textContent = 'File dipilih: ' + this.files[0].name;
-                        fileNameDisplay.classList.remove('hidden');
+                        fileNameDisplay.style.display = 'block';
                     }
                 });
+
+                // Handle click on the dropzone
+                dropzone.addEventListener('click', function() {
+                    fileInput.click();
+                });
+
+                // Handle drag and drop
+                ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                    dropzone.addEventListener(eventName, preventDefaults, false);
+                });
+
+                function preventDefaults(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
+
+                ['dragenter', 'dragover'].forEach(eventName => {
+                    dropzone.addEventListener(eventName, highlight, false);
+                });
+
+                ['dragleave', 'drop'].forEach(eventName => {
+                    dropzone.addEventListener(eventName, unhighlight, false);
+                });
+
+                function highlight() {
+                    dropzone.style.borderColor = 'var(--color-purple-500)';
+                    dropzone.style.backgroundColor = 'rgba(124, 58, 237, 0.05)';
+                }
+
+                function unhighlight() {
+                    dropzone.style.borderColor = 'var(--color-gray-700)';
+                    dropzone.style.backgroundColor = 'transparent';
+                }
+
+                dropzone.addEventListener('drop', handleDrop, false);
+
+                function handleDrop(e) {
+                    const dt = e.dataTransfer;
+                    const files = dt.files;
+                    fileInput.files = files;
+
+                    if (files && files[0]) {
+                        fileNameDisplay.textContent = 'File dipilih: ' + files[0].name;
+                        fileNameDisplay.style.display = 'block';
+                    }
+                }
             });
         </script>
     @endpush
