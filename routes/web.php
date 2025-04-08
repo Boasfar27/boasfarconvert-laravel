@@ -68,10 +68,13 @@ Route::middleware('auth')->group(function () {
         })->name('premium.index');
     });
     
-    // Admin routes
-    Route::middleware(CheckRole::class . ':admin')->group(function () {
-        Route::get('/admin', function () {
-            return view('admin.index');
+    // Admin routes - Comment this section as Filament will handle the routes
+    /*
+    Route::middleware(['auth', 'verified', CheckRole::class . ':admin'])->group(function () {
+        // Redirect ke Filament admin panel
+        Route::get('/admin', function() {
+            return redirect('/admin/users');
         })->name('admin.index');
     });
+    */
 });

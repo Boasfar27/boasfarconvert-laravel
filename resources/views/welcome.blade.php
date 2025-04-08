@@ -93,7 +93,7 @@
                     <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
                         <div class="feature-icon">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path
+                                        <path
                                     d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
                             </svg>
                         </div>
@@ -200,17 +200,17 @@
                                 <svg class="feature-icon" viewBox="0 0 24 24" fill="none">
                                     <path d="M6 18L18 6M6 6l12 12" stroke="currentColor" stroke-width="2"
                                         stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
+                                    </svg>
                                 <span>Word ke PDF</span>
-                            </li>
+                        </li>
                             <li class="feature-item feature-disabled">
                                 <svg class="feature-icon" viewBox="0 0 24 24" fill="none">
                                     <path d="M6 18L18 6M6 6l12 12" stroke="currentColor" stroke-width="2"
                                         stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
+                                    </svg>
                                 <span>Prioritas proses</span>
-                            </li>
-                        </ul>
+                        </li>
+                    </ul>
                         <a href="{{ route('register') }}" class="btn btn-outline btn-block">Daftar Gratis</a>
                     </div>
 
@@ -259,8 +259,8 @@
                                         stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
                                 <span>Prioritas proses</span>
-                            </li>
-                        </ul>
+                        </li>
+                    </ul>
                         <a href="{{ route('register') }}" class="btn btn-primary btn-block">Berlangganan</a>
                     </div>
                 </div>
@@ -288,5 +288,5 @@
                 </div>
             </div>
         </section>
-    </main>
+            </main>
 @endsection

@@ -70,8 +70,7 @@
                             @endif
 
                             @if (Auth::user()->isAdmin())
-                                <a href="{{ route('admin.index') }}"
-                                    class="block px-4 py-2 text-sm text-gray-500 hover:bg-gray-700">Admin</a>
+                                <a href="/admin" class="block px-4 py-2 text-sm text-gray-500 hover:bg-gray-700">Admin</a>
                             @endif
 
                             <hr class="my-1 border-gray-700">

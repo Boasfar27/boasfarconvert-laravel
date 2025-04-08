@@ -3,11 +3,14 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements FilamentUser
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
@@ -154,5 +157,29 @@ class User extends Authenticatable
 
         // Check if user has reached their daily limit (20 conversions)
         return $this->daily_conversions < 20;
+    }
+
+    /**
+     * Determine if the user can access the Filament admin panel.
+     */
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return $this->isAdmin() && $panel->getId() === 'admin';
+    }
+    
+    /**
+     * Get the conversion statistics for the user.
+     */
+    public function conversionStatistics(): HasMany
+    {
+        return $this->hasMany(ConversionStatistic::class);
+    }
+    
+    /**
+     * Get the converted images for the user.
+     */
+    public function convertedImages(): HasMany
+    {
+        return $this->hasMany(ConvertedImage::class);
     }
 }

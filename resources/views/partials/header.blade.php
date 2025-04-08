@@ -105,7 +105,7 @@
                             @endif
 
                             @if (Auth::user()->isAdmin())
-                                <a href="{{ route('admin.index') }}" class="header-dropdown-item admin-item">
+                                <a href="/admin" class="header-dropdown-item admin-item">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="header-dropdown-icon" viewBox="0 0 20 20"
                                         fill="currentColor">
                                         <path fill-rule="evenodd"
@@ -209,7 +209,7 @@
                     @endif
 
                     @if (Auth::user()->isAdmin())
-                        <a href="{{ route('admin.index') }}" class="header-mobile-item admin-item">
+                        <a href="/admin" class="header-mobile-item admin-item">
                             <svg xmlns="http://www.w3.org/2000/svg" class="header-mobile-icon" viewBox="0 0 20 20"
                                 fill="currentColor">
                                 <path fill-rule="evenodd"
