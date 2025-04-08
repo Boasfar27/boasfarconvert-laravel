@@ -220,7 +220,7 @@
                             <h3 class="pricing-title">Premium</h3>
                             <div class="pricing-price">
                                 <span class="currency">Rp</span>
-                                <span class="amount">99k</span>
+                                <span class="amount">49k</span>
                                 <span class="period">/bulan</span>
                             </div>
                         </div>
