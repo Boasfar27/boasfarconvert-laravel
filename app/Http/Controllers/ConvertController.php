@@ -60,6 +60,11 @@ class ConvertController extends Controller
             // Save as WebP format
             $img->encodeByExtension('webp', 80)
                 ->save($webpPath);
+
+            // Get original and converted sizes
+            $originalSize = filesize($image->getPathname());
+            $convertedSize = filesize($webpPath);
+            $compressionRatio = ($originalSize > 0) ? (1 - ($convertedSize / $originalSize)) * 100 : 0;
                 
             $convertedImages[] = [
                 'name' => $webpName,
@@ -68,6 +73,31 @@ class ConvertController extends Controller
             
             // Record conversion usage
             auth()->user()->recordConversion();
+            
+            // Save converted image in database
+            \App\Models\ConvertedImage::create([
+                'user_id' => auth()->id(),
+                'original_filename' => $image->getClientOriginalName(),
+                'original_path' => $image->getClientOriginalName(), // We don't store the original
+                'converted_filename' => $webpName,
+                'converted_path' => 'converted/webp/' . $webpName,
+                'conversion_type' => 'webp',
+                'original_size' => $this->formatBytes($originalSize),
+                'converted_size' => $this->formatBytes($convertedSize),
+                'compression_ratio' => $compressionRatio,
+            ]);
+            
+            // Save conversion statistics
+            \App\Models\ConversionStatistic::create([
+                'conversion_type' => 'image_to_webp',
+                'user_id' => auth()->id(),
+                'original_filename' => $image->getClientOriginalName(),
+                'converted_filename' => $webpName,
+                'original_size' => $this->formatBytes($originalSize),
+                'converted_size' => $this->formatBytes($convertedSize),
+                'ip_address' => request()->ip(),
+                'user_agent' => request()->userAgent(),
+            ]);
         }
         
         // If only one image was converted, use the old format for backward compatibility
@@ -120,6 +150,22 @@ class ConvertController extends Controller
         // Record conversion usage
         auth()->user()->recordConversion();
 
+        // Get information about the file
+        $file = $request->file('pdf');
+        $originalSize = filesize($file->getPathname());
+        
+        // Save conversion statistics even though conversion isn't implemented
+        \App\Models\ConversionStatistic::create([
+            'conversion_type' => 'pdf_to_word',
+            'user_id' => auth()->id(),
+            'original_filename' => $file->getClientOriginalName(),
+            'converted_filename' => str_replace('.pdf', '.docx', $file->getClientOriginalName()),
+            'original_size' => $this->formatBytes($originalSize),
+            'converted_size' => 'N/A', // Not applicable since conversion isn't implemented
+            'ip_address' => request()->ip(),
+            'user_agent' => request()->userAgent(),
+        ]);
+
         // Implementation will need a library like PhpWord
         // This is just a placeholder - actual implementation requires a third-party service
         // or more complex library like Spatie PDF to HTML + HTML to Word conversion
@@ -147,6 +193,22 @@ class ConvertController extends Controller
         
         // Record conversion usage
         auth()->user()->recordConversion();
+
+        // Get information about the file
+        $file = $request->file('word');
+        $originalSize = filesize($file->getPathname());
+        
+        // Save conversion statistics even though conversion isn't implemented
+        \App\Models\ConversionStatistic::create([
+            'conversion_type' => 'word_to_pdf',
+            'user_id' => auth()->id(),
+            'original_filename' => $file->getClientOriginalName(),
+            'converted_filename' => str_replace(['.doc', '.docx'], '.pdf', $file->getClientOriginalName()),
+            'original_size' => $this->formatBytes($originalSize),
+            'converted_size' => 'N/A', // Not applicable since conversion isn't implemented
+            'ip_address' => request()->ip(),
+            'user_agent' => request()->userAgent(),
+        ]);
 
         // Implementation will need a library like PhpWord
         // This is just a placeholder - actual implementation requires a third-party service
@@ -213,5 +275,21 @@ class ConvertController extends Controller
         
         // Return ZIP file for download
         return response()->download($zipFilePath)->deleteFileAfterSend(true);
+    }
+
+    /**
+     * Format bytes to KB, MB, etc
+     */
+    private function formatBytes($bytes, $precision = 2) 
+    {
+        $units = ['B', 'KB', 'MB', 'GB', 'TB'];
+        
+        $bytes = max($bytes, 0);
+        $pow = floor(($bytes ? log($bytes) : 0) / log(1024));
+        $pow = min($pow, count($units) - 1);
+        
+        $bytes /= (1 << (10 * $pow));
+        
+        return round($bytes, $precision) . ' ' . $units[$pow];
     }
 }
