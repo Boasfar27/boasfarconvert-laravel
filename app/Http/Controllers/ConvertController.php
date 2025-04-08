@@ -20,12 +20,13 @@ class ConvertController extends Controller
     }
 
     /**
-     * Convert image to WebP
+     * Convert images to WebP
      */
     public function convertImage(Request $request)
     {
         $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'images' => 'required|array|max:5',
+            'images.*' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         // Check if user can convert
@@ -35,32 +36,52 @@ class ConvertController extends Controller
             ]);
         }
 
-        $image = $request->file('image');
-        $originalName = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
+        $convertedImages = [];
+        $images = $request->file('images');
+        
+        // Limit to maximum 5 images
+        $imagesToProcess = array_slice($images, 0, 5);
+        
         $manager = new ImageManager(new \Intervention\Image\Drivers\Gd\Driver());
-        
-        $img = $manager->read($image);
-        
-        // Create WebP image
-        $webpName = $originalName . '_' . time() . '.webp';
-        $webpPath = storage_path('app/public/converted/webp/' . $webpName);
-        
-        // Make sure directory exists
-        if (!File::exists(storage_path('app/public/converted/webp'))) {
-            File::makeDirectory(storage_path('app/public/converted/webp'), 0755, true);
+
+        foreach ($imagesToProcess as $image) {
+            $originalName = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
+            $img = $manager->read($image);
+            
+            // Create WebP image
+            $webpName = $originalName . '_' . time() . '.webp';
+            $webpPath = storage_path('app/public/converted/webp/' . $webpName);
+            
+            // Make sure directory exists
+            if (!File::exists(storage_path('app/public/converted/webp'))) {
+                File::makeDirectory(storage_path('app/public/converted/webp'), 0755, true);
+            }
+            
+            // Save as WebP format
+            $img->encodeByExtension('webp', 80)
+                ->save($webpPath);
+                
+            $convertedImages[] = [
+                'name' => $webpName,
+                'path' => asset('storage/converted/webp/' . $webpName)
+            ];
+            
+            // Record conversion usage
+            auth()->user()->recordConversion();
         }
         
-        // Save as WebP format
-        $img->encodeByExtension('webp', 80)
-            ->save($webpPath);
-        
-        // Record conversion usage
-        auth()->user()->recordConversion();
+        // If only one image was converted, use the old format for backward compatibility
+        if (count($convertedImages) === 1) {
+            return redirect()->back()->with([
+                'success' => 'Gambar berhasil dikonversi ke WebP!',
+                'webp_path' => $convertedImages[0]['path'],
+                'webp_name' => $convertedImages[0]['name'],
+            ]);
+        }
         
         return redirect()->back()->with([
             'success' => 'Gambar berhasil dikonversi ke WebP!',
-            'webp_path' => asset('storage/converted/webp/' . $webpName),
-            'webp_name' => $webpName,
+            'converted_images' => $convertedImages,
         ]);
     }
 
@@ -134,5 +155,63 @@ class ConvertController extends Controller
         return redirect()->back()->with([
             'info' => 'Fitur konversi Word ke PDF sedang dalam pengembangan.',
         ]);
+    }
+
+    /**
+     * Download all converted images as a ZIP file
+     */
+    public function downloadAllImages(Request $request)
+    {
+        // Get files from query parameters
+        $files = $request->query('files');
+        
+        if (empty($files)) {
+            return redirect()->route('convert.image.form')
+                ->with('error', 'Tidak ada file yang dipilih untuk diunduh');
+        }
+        
+        $fileNames = explode(',', $files);
+        
+        // Create new ZIP archive
+        $zipName = 'converted_images_' . time() . '.zip';
+        $zipPath = storage_path('app/public/converted/zip');
+        
+        // Make sure directory exists
+        if (!File::exists($zipPath)) {
+            File::makeDirectory($zipPath, 0755, true);
+        }
+        
+        $zipFilePath = $zipPath . '/' . $zipName;
+        
+        $zip = new \ZipArchive();
+        
+        if ($zip->open($zipFilePath, \ZipArchive::CREATE) !== TRUE) {
+            return redirect()->route('convert.image.form')
+                ->with('error', 'Tidak dapat membuat file ZIP');
+        }
+        
+        // Add files to ZIP
+        $webpPath = storage_path('app/public/converted/webp');
+        $filesToAdd = [];
+        
+        foreach ($fileNames as $fileName) {
+            $filePath = $webpPath . '/' . $fileName;
+            if (File::exists($filePath)) {
+                $zip->addFile($filePath, $fileName);
+                $filesToAdd[] = $fileName;
+            }
+        }
+        
+        if (empty($filesToAdd)) {
+            $zip->close();
+            File::delete($zipFilePath);
+            return redirect()->route('convert.image.form')
+                ->with('error', 'Tidak ada file yang ditemukan untuk diunduh');
+        }
+        
+        $zip->close();
+        
+        // Return ZIP file for download
+        return response()->download($zipFilePath)->deleteFileAfterSend(true);
     }
 }

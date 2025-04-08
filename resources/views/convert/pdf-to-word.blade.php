@@ -106,9 +106,52 @@
                 const pdfNameDisplay = document.getElementById('pdf-name');
                 const pdfDropzone = document.getElementById('pdf-dropzone');
 
+                // Function to show custom styled alert
+                function showCustomAlert(message, type = 'error') {
+                    // Remove any existing alerts
+                    const existingAlerts = document.querySelectorAll('.custom-alert');
+                    existingAlerts.forEach(alert => alert.remove());
+
+                    // Create alert container
+                    const alertContainer = document.createElement('div');
+                    alertContainer.className = `convert-${type} custom-alert`;
+
+                    // Create alert title
+                    const alertTitle = document.createElement('h3');
+                    alertTitle.className = `convert-${type}-title`;
+                    alertTitle.textContent = type === 'error' ? 'Error' :
+                        type === 'info' ? 'Informasi' : 'Perhatian';
+
+                    // Create alert message
+                    const alertMessage = document.createElement('p');
+                    alertMessage.className = `convert-${type}-message`;
+                    alertMessage.textContent = message;
+
+                    // Assemble alert
+                    alertContainer.appendChild(alertTitle);
+                    alertContainer.appendChild(alertMessage);
+
+                    // Insert alert before the form
+                    const form = document.querySelector('.convert-form');
+                    form.parentNode.insertBefore(alertContainer, form);
+
+                    // Auto remove after 5 seconds
+                    setTimeout(() => {
+                        alertContainer.remove();
+                    }, 5000);
+                }
+
                 // Handle file selection via input
                 pdfInput.addEventListener('change', function() {
                     if (this.files && this.files[0]) {
+                        // Check file size
+                        if (this.files[0].size > 10 * 1024 * 1024) {
+                            showCustomAlert('Ukuran file tidak boleh melebihi 10MB', 'error');
+                            this.value = '';
+                            pdfNameDisplay.style.display = 'none';
+                            return;
+                        }
+
                         pdfNameDisplay.textContent = 'File dipilih: ' + this.files[0].name;
                         pdfNameDisplay.style.display = 'block';
                     }
@@ -158,9 +201,21 @@
                 function handleDrop(e, input, display) {
                     const dt = e.dataTransfer;
                     const files = dt.files;
-                    input.files = files;
 
                     if (files && files[0]) {
+                        // Check file type
+                        if (!files[0].type.includes('pdf')) {
+                            showCustomAlert('Hanya file PDF yang diperbolehkan', 'error');
+                            return;
+                        }
+
+                        // Check file size
+                        if (files[0].size > 10 * 1024 * 1024) {
+                            showCustomAlert('Ukuran file tidak boleh melebihi 10MB', 'error');
+                            return;
+                        }
+
+                        input.files = files;
                         display.textContent = 'File dipilih: ' + files[0].name;
                         display.style.display = 'block';
                     }

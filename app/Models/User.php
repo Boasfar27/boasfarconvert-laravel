@@ -93,7 +93,6 @@ class User extends Authenticatable
             return 'Tak Terbatas';
         }
 
-        // Reset counter if it's a new day
         $today = now()->format('Y-m-d');
         if ($this->last_conversion_date === null || $this->last_conversion_date->format('Y-m-d') !== $today) {
             $this->daily_conversions = 0;
@@ -101,7 +100,7 @@ class User extends Authenticatable
             $this->save();
         }
 
-        return (5 - $this->daily_conversions) . '/5';
+        return (20 - $this->daily_conversions) . '/20';
     }
 
     /**
@@ -121,8 +120,8 @@ class User extends Authenticatable
             $this->last_conversion_date = now();
         }
 
-        // Check if user has reached their daily limit
-        if ($this->daily_conversions >= 5) {
+        // Check if user has reached their daily limit (20 conversions)
+        if ($this->daily_conversions >= 20) {
             return false;
         }
 
@@ -153,7 +152,7 @@ class User extends Authenticatable
             return true;
         }
 
-        // Check if user has reached their daily limit
-        return $this->daily_conversions < 5;
+        // Check if user has reached their daily limit (20 conversions)
+        return $this->daily_conversions < 20;
     }
 }

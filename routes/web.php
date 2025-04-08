@@ -50,6 +50,7 @@ Route::middleware('auth')->group(function () {
         // Image conversion
         Route::get('/convert/image', [ConvertController::class, 'showImageForm'])->name('convert.image.form');
         Route::post('/convert/image', [ConvertController::class, 'convertImage'])->name('convert.image');
+        Route::get('/convert/image/download-all', [ConvertController::class, 'downloadAllImages'])->name('convert.image.download-all');
         
         // PDF conversion (restricted to premium and admin users)
         Route::middleware(CheckRole::class . ':premium,admin')->group(function () {
