@@ -223,6 +223,8 @@ img {
     font-weight: 500;
     cursor: pointer;
     transition: all 0.3s ease;
+    z-index: 1001;
+    position: relative;
 }
 
 .header-user-btn:hover {
@@ -257,7 +259,7 @@ img {
     border: 1px solid var(--color-gray-700);
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    z-index: 100;
+    z-index: 1002;
     transform-origin: top right;
 }
 
@@ -1583,19 +1585,7 @@ img {
     pointer-events: none;
 }
 
-.premium-badge {
-    position: absolute;
-    top: 0;
-    right: 1.5rem;
-    background: linear-gradient(135deg, var(--color-purple-600), var(--color-purple-800));
-    color: var(--color-white);
-    font-size: 0.75rem;
-    font-weight: 500;
-    padding: 0.25rem 1rem;
-    border-radius: 0 0 var(--border-radius) var(--border-radius);
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    z-index: 2;
-}
+
 
 .btn.disabled {
     opacity: 0.7;
@@ -3141,4 +3131,134 @@ img {
 .convert-actions svg {
     width: 1.25rem;
     height: 1.25rem;
+}
+
+/* Premium Page Styles */
+.premium-page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 180px 20px 60px;
+    /* Meningkatkan padding-top menjadi 180px */
+    position: relative;
+    z-index: 5;
+    /* Pastikan konten berada di bawah header */
+}
+
+.premium-card {
+    background-color: var(--color-gray-800);
+    border-radius: var(--border-radius-lg);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    padding: 2.5rem;
+    margin-top: 0;
+    /* Menghapus margin-top karena sudah ada padding pada premium-page */
+    position: relative;
+}
+
+.premium-heading {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-white);
+    margin-bottom: 1.5rem;
+    text-align: center;
+    padding-top: 0;
+    /* Menghapus padding-top karena sudah diatur pada premium-page */
+}
+
+/* Site Header - Pastikan z-index lebih tinggi dari elemen lain */
+.site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--header-height);
+    z-index: 1000;
+    /* Tetap jadi 1000 */
+    background-color: rgba(13, 13, 13, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+}
+
+/* Header User Button - Memastikan user dropdown tidak menabrak */
+.header-user-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0.75rem;
+    background-color: var(--color-gray-800);
+    border: 1px solid var(--color-gray-700);
+    border-radius: var(--border-radius);
+    color: var(--color-white);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 1001;
+    /* Sedikit lebih tinggi dari header */
+    position: relative;
+}
+
+/* Memperbarui tampilan untuk layar medium (tablet) */
+@media (max-width: 992px) {
+    .premium-page {
+        padding-top: 150px;
+        /* Mengurangi sedikit padding untuk tablet */
+    }
+
+    .premium-features {
+        grid-template-columns: repeat(2, 1fr);
+        /* Tetap 2 kolom pada tablet */
+        gap: 1.25rem;
+    }
+}
+
+/* Memperbaiki tampilan untuk ukuran layar kecil */
+@media (max-width: 768px) {
+    .premium-page {
+        padding-top: 130px;
+        /* Mengurangi padding pada layar kecil */
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .premium-card {
+        padding: 1.5rem;
+    }
+
+    .premium-features {
+        grid-template-columns: 1fr;
+        /* Satu kolom pada mobile */
+    }
+
+    .site-header {
+        height: 70px;
+        /* Header lebih pendek di mobile */
+    }
+
+    .premium-heading {
+        font-size: 1.75rem;
+    }
+}
+
+/* Responsif pada ukuran sangat kecil */
+@media (max-width: 480px) {
+    .premium-page {
+        padding-top: 110px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .premium-card {
+        padding: 1.25rem;
+    }
+
+    .premium-heading {
+        font-size: 1.5rem;
+    }
+}
+
+/* Penanganan elemen warna ungu (badge-premium) di header */
+.badge-premium {
+    position: relative;
+    z-index: 10;
+    /* Memastikan posisi relatif terhadap header */
 }
