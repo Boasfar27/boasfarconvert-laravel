@@ -1358,13 +1358,23 @@ img {
 }
 
 .auth-form .btn-forgot:hover {
-    color: var(--color-purple-300);
-    text-decoration: underline;
+    color: var(--color-purple-400);
+}
+
+.auth-note {
+    font-size: 0.9rem;
+    color: var(--color-gray-400);
+    text-align: center;
+    margin-top: 1rem;
+    padding: 0.75rem;
+    background-color: rgba(109, 40, 217, 0.1);
+    border-radius: var(--border-radius);
+    border-left: 3px solid var(--color-purple-600);
 }
 
 /* Social Login */
 .social-login {
-    margin-bottom: 1.5rem;
+    margin-top: 1.5rem;
 }
 
 .social-login .divider {

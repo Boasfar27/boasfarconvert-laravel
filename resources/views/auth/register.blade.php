@@ -98,6 +98,11 @@
                                 Daftar
                             </button>
                         </div>
+
+                        <div class="form-group">
+                            <p class="auth-note">Setelah mendaftar, Anda akan menerima email verifikasi. Verifikasi email
+                                diperlukan untuk mengakses fitur lengkap aplikasi.</p>
+                        </div>
                     </form>
 
                     <div class="social-login">

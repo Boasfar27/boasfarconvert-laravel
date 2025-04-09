@@ -77,6 +77,11 @@
                                 </a>
                             @endif
                         </div>
+
+                        <div class="form-group">
+                            <p class="auth-note">Setelah masuk, verifikasi email diperlukan untuk mengakses fitur lengkap
+                                aplikasi.</p>
+                        </div>
                     </form>
 
                     <div class="social-login">
