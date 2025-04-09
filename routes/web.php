@@ -6,6 +6,8 @@ use App\Http\Controllers\ConvertController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\CheckRole;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
 
 // Public routes
 Route::get('/', function () {
@@ -25,6 +27,21 @@ Route::middleware('guest')->group(function () {
     Route::get('/auth/google/callback', [GoogleAuthController::class, 'handleGoogleCallback']);
 });
 
+// Email Verification Routes
+Route::get('/email/verify', function () {
+    return view('auth.verify-email');
+})->middleware('auth')->name('verification.notice');
+
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+    return redirect('/dashboard');
+})->middleware(['auth', 'signed'])->name('verification.verify');
+
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+    return back()->with('resent', true);
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
 // Authenticated routes
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
@@ -32,17 +49,17 @@ Route::middleware('auth')->group(function () {
     // Home/Dashboard
     Route::get('/dashboard', function () {
         return view('dashboard');
-    })->name('home');
+    })->middleware('verified')->name('home');
     
     // Profile routes
     Route::get('/profile', function () {
         return view('profile.edit');
-    })->name('profile.edit');
-    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password.update');
+    })->middleware('verified')->name('profile.edit');
+    Route::put('/profile', [ProfileController::class, 'update'])->middleware('verified')->name('profile.update');
+    Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->middleware('verified')->name('profile.password.update');
     
     // User routes
-    Route::middleware(CheckRole::class . ':user,premium,admin')->group(function () {
+    Route::middleware(['verified', CheckRole::class . ':user,premium,admin'])->group(function () {
         Route::get('/convert', function () {
             return view('convert.index');
         })->name('convert.index');
@@ -62,7 +79,7 @@ Route::middleware('auth')->group(function () {
     });
     
     // Premium user routes
-    Route::middleware(CheckRole::class . ':premium,admin')->group(function () {
+    Route::middleware(['verified', CheckRole::class . ':premium,admin'])->group(function () {
         Route::get('/premium', function () {
             return view('premium.index');
         })->name('premium.index');
