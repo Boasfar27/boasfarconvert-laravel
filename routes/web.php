@@ -25,6 +25,9 @@ Route::middleware('guest')->group(function () {
     // Google authentication
     Route::get('/auth/google', [GoogleAuthController::class, 'redirectToGoogle'])->name('login.google');
     Route::get('/auth/google/callback', [GoogleAuthController::class, 'handleGoogleCallback']);
+    
+    // Tambahkan route alternatif untuk Google callback
+    Route::get('/google/callback', [GoogleAuthController::class, 'handleGoogleCallback']);
 });
 
 // Email Verification Routes
