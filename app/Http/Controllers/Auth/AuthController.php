@@ -40,7 +40,10 @@ class AuthController extends Controller
         if (Auth::attempt($credentials, $request->filled('remember'))) {
             $request->session()->regenerate();
 
-            return redirect()->intended(route('home'));
+            $user = Auth::user();
+            
+            return redirect()->intended(route('home'))
+                ->with('success', 'Selamat datang kembali, ' . $user->name . '!');
         }
 
         return back()->withErrors([
@@ -82,7 +85,8 @@ class AuthController extends Controller
 
         Auth::login($user);
 
-        return redirect()->route('home');
+        return redirect()->route('verification.notice')
+            ->with('success', 'Pendaftaran berhasil! Silahkan verifikasi email Anda untuk mengakses semua fitur.');
     }
 
     /**
@@ -96,6 +100,7 @@ class AuthController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect()->route('login');
+        return redirect()->route('login')
+            ->with('success', 'Anda berhasil keluar dari sistem.');
     }
 }

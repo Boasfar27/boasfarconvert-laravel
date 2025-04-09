@@ -37,6 +37,7 @@ class GoogleAuthController extends Controller
             }
             
             $user = User::where('google_id', $googleUser->getId())->first();
+            $isNewUser = false;
             
             if (!$user) {
                 // Periksa apakah pengguna dengan email ini sudah ada
@@ -56,6 +57,7 @@ class GoogleAuthController extends Controller
                     ]);
                 } else {
                     // Buat pengguna baru
+                    $isNewUser = true;
                     $user = User::create([
                         'name' => $googleUser->getName(),
                         'email' => $googleUser->getEmail(),
@@ -71,6 +73,14 @@ class GoogleAuthController extends Controller
                 }
             }
             
+            // Otomatis verifikasi email untuk pengguna Google
+            if (!$user->hasVerifiedEmail()) {
+                $user->markEmailAsVerified();
+                Log::info('Email otomatis diverifikasi untuk pengguna Google', [
+                    'email' => $user->email
+                ]);
+            }
+            
             // Login pengguna
             Auth::login($user, true);
             
@@ -79,7 +89,13 @@ class GoogleAuthController extends Controller
                 'email' => $user->email
             ]);
             
-            return redirect()->route('home')->with('success', 'Selamat datang, ' . $user->name . '!');
+            if ($isNewUser) {
+                return redirect()->route('home')
+                    ->with('success', 'Selamat datang di Boasfar Convert! Akun Anda telah dibuat dan email Anda telah diverifikasi.');
+            }
+            
+            return redirect()->route('home')
+                ->with('success', 'Selamat datang kembali, ' . $user->name . '!');
             
         } catch (\Exception $e) {
             Log::error('Google login error', [

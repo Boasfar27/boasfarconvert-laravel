@@ -17,6 +17,9 @@
     <!-- Alpine.js -->
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <!-- Styles -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
@@ -35,6 +38,51 @@
 
     <!-- Footer -->
     @include('partials.footer')
+
+    <!-- SweetAlert Notifications -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            @if (session('success'))
+                Swal.fire({
+                    title: 'Berhasil!',
+                    text: "{{ session('success') }}",
+                    icon: 'success',
+                    confirmButtonColor: '#6d28d9',
+                    confirmButtonText: 'OK'
+                });
+            @endif
+
+            @if (session('error'))
+                Swal.fire({
+                    title: 'Error!',
+                    text: "{{ session('error') }}",
+                    icon: 'error',
+                    confirmButtonColor: '#6d28d9',
+                    confirmButtonText: 'OK'
+                });
+            @endif
+
+            @if (session('warning'))
+                Swal.fire({
+                    title: 'Perhatian!',
+                    text: "{{ session('warning') }}",
+                    icon: 'warning',
+                    confirmButtonColor: '#6d28d9',
+                    confirmButtonText: 'OK'
+                });
+            @endif
+
+            @if (session('info'))
+                Swal.fire({
+                    title: 'Informasi',
+                    text: "{{ session('info') }}",
+                    icon: 'info',
+                    confirmButtonColor: '#6d28d9',
+                    confirmButtonText: 'OK'
+                });
+            @endif
+        });
+    </script>
 
     <!-- Scripts -->
     @stack('scripts')
