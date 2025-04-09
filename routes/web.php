@@ -78,3 +78,18 @@ Route::middleware('auth')->group(function () {
     });
     */
 });
+
+// Conversion Routes
+Route::get('/convert', [ConvertController::class, 'index'])->name('convert.index');
+Route::get('/convert/image', [ConvertController::class, 'showImageForm'])->name('convert.image.form');
+Route::post('/convert/image', [ConvertController::class, 'convertImage'])->name('convert.image');
+
+Route::get('/convert/pdf-to-word', [ConvertController::class, 'showPdfToWordForm'])->name('convert.pdf-to-word.form');
+Route::post('/convert/pdf-to-word', [ConvertController::class, 'pdfToWord'])->name('convert.pdf-to-word');
+Route::post('/convert/pdf-to-word/cloud', [ConvertController::class, 'pdfToWordCloudConvert'])->name('convert.pdf-to-word.cloud');
+
+Route::get('/convert/word-to-pdf', [ConvertController::class, 'showWordToPdfForm'])->name('convert.word-to-pdf.form');
+Route::post('/convert/word-to-pdf', [ConvertController::class, 'wordToPdf'])->name('convert.word-to-pdf');
+Route::post('/convert/word-to-pdf/cloud', [ConvertController::class, 'wordToPdfCloudConvert'])->name('convert.word-to-pdf.cloud');
+
+Route::get('/convert/download-all-images', [ConvertController::class, 'downloadAllImages'])->name('convert.download-all-images');

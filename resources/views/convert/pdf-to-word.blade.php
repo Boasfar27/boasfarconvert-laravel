@@ -25,6 +25,42 @@
             </div>
         @endif
 
+        @if (session('success'))
+            <div class="convert-success">
+                <h3 class="convert-success-title">Konversi Berhasil!</h3>
+                <div class="convert-result">
+                    <div class="convert-result-image">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                            <polyline points="10 9 9 9 8 9"></polyline>
+                        </svg>
+                    </div>
+                    <div class="convert-result-info">
+                        <p class="convert-result-label">File Hasil Konversi:</p>
+                        <p class="convert-result-filename">{{ session('docx_name') }}</p>
+                        <div class="convert-actions">
+                            <a href="{{ session('docx_path') }}" download="{{ session('docx_name') }}"
+                                class="btn btn-primary">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                    <polyline points="7 10 12 15 17 10"></polyline>
+                                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                                </svg>
+                                Download File
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
+
         <div class="convert-document-card">
             <form action="{{ route('convert.pdf-to-word') }}" method="POST" enctype="multipart/form-data"
                 class="convert-form">
