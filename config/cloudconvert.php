@@ -10,7 +10,7 @@ return [
     /**
      * Use the CloudConvert Sanbox API (Defaults to false, which enables the Production API).
      */
-    'sandbox' => env('CLOUDCONVERT_SANDBOX', true),
+    'sandbox' => env('CLOUDCONVERT_SANDBOX', false),
 
     /**
      * You can find the secret used at the webhook settings: https://cloudconvert.com/dashboard/api/v2/webhooks
