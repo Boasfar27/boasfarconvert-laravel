@@ -1778,10 +1778,6 @@ img {
     padding: 1rem;
 }
 
-.image-shadow {
-    border-radius: var(--border-radius-lg);
-    box-shadow: 0 25px 50px -12px rgba(124, 58, 237, 0.25);
-}
 
 .floating-card {
     position: absolute;
