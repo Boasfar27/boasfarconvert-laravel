@@ -113,3 +113,23 @@ Route::post('/convert/word-to-pdf', [ConvertController::class, 'wordToPdf'])->na
 Route::post('/convert/word-to-pdf/cloud', [ConvertController::class, 'wordToPdfCloudConvert'])->name('convert.word-to-pdf.cloud');
 
 Route::get('/convert/download-all-images', [ConvertController::class, 'downloadAllImages'])->name('convert.download-all-images');
+
+// Test route for 404 error page
+Route::get('/test-404', function () {
+    abort(404);
+});
+
+// Test route for 500 error page
+Route::get('/test-500', function () {
+    abort(500);
+});
+
+// Test route for 403 error page
+Route::get('/test-403', function () {
+    abort(403);
+});
+
+// Test route for 419 error page
+Route::get('/test-419', function () {
+    abort(419);
+});
