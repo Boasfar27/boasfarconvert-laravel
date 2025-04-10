@@ -66,16 +66,16 @@ class ConvertedImageResource extends Resource
                         Forms\Components\ViewField::make('original_image')
                             ->label('Gambar Asli')
                             ->view('filament.resources.converted-image-resource.components.image-preview')
-                            ->viewData(fn ($record) => [
-                                'url' => $record?->original_path,
-                                'name' => $record?->original_filename,
+                            ->viewData([
+                                'url' => fn ($record) => $record?->original_path,
+                                'name' => fn ($record) => $record?->original_filename,
                             ]),
                         Forms\Components\ViewField::make('converted_image')
                             ->label('Gambar Hasil')
                             ->view('filament.resources.converted-image-resource.components.image-preview')
-                            ->viewData(fn ($record) => [
-                                'url' => $record?->converted_path,
-                                'name' => $record?->converted_filename,
+                            ->viewData([
+                                'url' => fn ($record) => $record?->converted_path,
+                                'name' => fn ($record) => $record?->converted_filename,
                             ]),
                     ])
                     ->columns(2),

@@ -1,14 +1,19 @@
 <div>
-    @if (isset($url) && $url)
+    @php
+        $displayUrl = is_callable($url) ? $url($getRecord()) : $url;
+        $displayName = is_callable($name) ? $name($getRecord()) : $name;
+    @endphp
+
+    @if (isset($displayUrl) && $displayUrl)
         <div class="flex flex-col items-center">
             <div class="mb-2 rounded overflow-hidden border border-gray-300 dark:border-gray-700 w-full max-w-xl">
-                <img src="{{ $url }}" alt="{{ $name ?? 'Preview' }}" class="w-full h-auto" />
+                <img src="{{ $displayUrl }}" alt="{{ $displayName ?? 'Preview' }}" class="w-full h-auto" />
             </div>
             <div class="text-sm text-gray-600 dark:text-gray-400">
-                {{ $name ?? 'Gambar' }}
+                {{ $displayName ?? 'Gambar' }}
             </div>
             <div class="mt-2">
-                <a href="{{ $url }}" target="_blank"
+                <a href="{{ $displayUrl }}" target="_blank"
                     class="text-primary-500 hover:text-primary-600 text-sm font-medium">
                     Lihat Ukuran Penuh
                 </a>
