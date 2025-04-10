@@ -58,40 +58,52 @@ class ConvertController extends Controller
             
             // Create WebP image
             $webpName = $originalName . '_' . time() . '.webp';
-            $webpPath = storage_path('app/public/converted/webp/' . $webpName);
             
-            // Make sure directory exists
-            if (!File::exists(storage_path('app/public/converted/webp'))) {
-                File::makeDirectory(storage_path('app/public/converted/webp'), 0755, true);
+            // Simpan langsung ke public, tanpa storage
+            $origPublicDir = public_path('uploads/originals');
+            $webpPublicDir = public_path('converted/webp');
+            
+            // Make sure directories exist
+            if (!File::exists($origPublicDir)) {
+                File::makeDirectory($origPublicDir, 0755, true);
             }
             
-            // Save as WebP format
+            if (!File::exists($webpPublicDir)) {
+                File::makeDirectory($webpPublicDir, 0755, true);
+            }
+            
+            // Store original file
+            $originalFilePath = $origPublicDir . '/' . $image->getClientOriginalName();
+            $image->move($origPublicDir, $image->getClientOriginalName());
+            
+            // Save WebP file directly to public folder
+            $webpFilePath = $webpPublicDir . '/' . $webpName;
             $img->encodeByExtension('webp', 80)
-                ->save($webpPath);
+                ->save($webpFilePath);
 
             // Get original and converted sizes
-            $originalSize = filesize($image->getPathname());
-            $convertedSize = filesize($webpPath);
+            $originalSize = filesize($originalFilePath);
+            $convertedSize = filesize($webpFilePath);
             $compressionRatio = ($originalSize > 0) ? (1 - ($convertedSize / $originalSize)) * 100 : 0;
                 
             $convertedImages[] = [
                 'name' => $webpName,
-                'path' => asset('storage/converted/webp/' . $webpName)
+                'path' => asset('converted/webp/' . $webpName)
             ];
             
             // Record conversion usage
             auth()->user()->recordConversion();
             
-            // Save converted image in database
+            // Save relative paths to database for easier URL generation later
             \App\Models\ConvertedImage::create([
                 'user_id' => auth()->id(),
                 'original_filename' => $image->getClientOriginalName(),
-                'original_path' => $image->getClientOriginalName(), // We don't store the original
+                'original_path' => 'uploads/originals/' . $image->getClientOriginalName(),
                 'converted_filename' => $webpName,
                 'converted_path' => 'converted/webp/' . $webpName,
                 'conversion_type' => 'webp',
-                'original_size' => $this->formatBytes($originalSize),
-                'converted_size' => $this->formatBytes($convertedSize),
+                'original_size' => $originalSize,
+                'converted_size' => $convertedSize,
                 'compression_ratio' => $compressionRatio,
             ]);
             
@@ -101,8 +113,8 @@ class ConvertController extends Controller
                 'user_id' => auth()->id(),
                 'original_filename' => $image->getClientOriginalName(),
                 'converted_filename' => $webpName,
-                'original_size' => $this->formatBytes($originalSize),
-                'converted_size' => $this->formatBytes($convertedSize),
+                'original_size' => $originalSize,
+                'converted_size' => $convertedSize,
                 'ip_address' => request()->ip(),
                 'user_agent' => request()->userAgent(),
             ]);
@@ -280,8 +292,8 @@ class ConvertController extends Controller
                 'user_id' => auth()->id(),
                 'original_filename' => $originalFilename,
                 'converted_filename' => $outputFilename,
-                'original_size' => $this->formatBytes($originalSize),
-                'converted_size' => $this->formatBytes($convertedSize),
+                'original_size' => $originalSize,
+                'converted_size' => $convertedSize,
                 'ip_address' => request()->ip(),
                 'user_agent' => request()->userAgent(),
             ]);
@@ -500,8 +512,8 @@ class ConvertController extends Controller
                 'user_id' => auth()->id(),
                 'original_filename' => $originalFilename,
                 'converted_filename' => $outputFilename,
-                'original_size' => $this->formatBytes($originalSize),
-                'converted_size' => $this->formatBytes($convertedSize),
+                'original_size' => $originalSize,
+                'converted_size' => $convertedSize,
                 'ip_address' => request()->ip(),
                 'user_agent' => request()->userAgent(),
             ]);
@@ -630,8 +642,8 @@ class ConvertController extends Controller
                 'user_id' => auth()->id(),
                 'original_filename' => $originalFilename,
                 'converted_filename' => $outputFilename,
-                'original_size' => $this->formatBytes($originalSize),
-                'converted_size' => $this->formatBytes($convertedSize),
+                'original_size' => $originalSize,
+                'converted_size' => $convertedSize,
                 'ip_address' => request()->ip(),
                 'user_agent' => request()->userAgent(),
             ]);
@@ -760,8 +772,8 @@ class ConvertController extends Controller
                 'user_id' => auth()->id(),
                 'original_filename' => $originalFilename,
                 'converted_filename' => $outputFilename,
-                'original_size' => $this->formatBytes($originalSize),
-                'converted_size' => $this->formatBytes($convertedSize),
+                'original_size' => $originalSize,
+                'converted_size' => $convertedSize,
                 'ip_address' => request()->ip(),
                 'user_agent' => request()->userAgent(),
             ]);

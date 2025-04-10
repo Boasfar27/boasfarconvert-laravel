@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Storage;
 
 class ConvertedImage extends Model
 {
@@ -42,6 +43,40 @@ class ConvertedImage extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+    
+    /**
+     * Get the URL for the original image.
+     */
+    public function getOriginalUrlAttribute()
+    {
+        if (!$this->original_path) {
+            return null;
+        }
+        
+        if (str_starts_with($this->original_path, 'http')) {
+            return $this->original_path;
+        }
+        
+        // Path langsung ke public folder
+        return asset($this->original_path);
+    }
+    
+    /**
+     * Get the URL for the converted image.
+     */
+    public function getConvertedUrlAttribute()
+    {
+        if (!$this->converted_path) {
+            return null;
+        }
+        
+        if (str_starts_with($this->converted_path, 'http')) {
+            return $this->converted_path;
+        }
+        
+        // Path langsung ke public folder
+        return asset($this->converted_path);
     }
     
     /**

@@ -67,14 +67,14 @@ class ConvertedImageResource extends Resource
                             ->label('Gambar Asli')
                             ->view('filament.resources.converted-image-resource.components.image-preview')
                             ->viewData([
-                                'url' => fn ($record) => $record?->original_path,
+                                'url' => fn ($record) => $record?->original_url,
                                 'name' => fn ($record) => $record?->original_filename,
                             ]),
                         Forms\Components\ViewField::make('converted_image')
                             ->label('Gambar Hasil')
                             ->view('filament.resources.converted-image-resource.components.image-preview')
                             ->viewData([
-                                'url' => fn ($record) => $record?->converted_path,
+                                'url' => fn ($record) => $record?->converted_url,
                                 'name' => fn ($record) => $record?->converted_filename,
                             ]),
                     ])
@@ -86,18 +86,19 @@ class ConvertedImageResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\ImageColumn::make('converted_path')
-                    ->label('Preview')
-                    ->circular(),
-                Tables\Columns\TextColumn::make('user.name')
-                    ->label('Pengguna')
+                Tables\Columns\TextColumn::make('converted_filename')
+                    ->label('File Hasil')
+                    ->searchable()
+                    ->copyable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('original_filename')
                     ->label('File Asli')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('converted_filename')
-                    ->label('File Hasil')
-                    ->searchable(),
+                    ->searchable()
+                    ->copyable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('user.name')
+                    ->label('Pengguna')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('formatted_original_size')
                     ->label('Ukuran Asli'),
                 Tables\Columns\TextColumn::make('formatted_converted_size')
