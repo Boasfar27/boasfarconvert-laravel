@@ -1,2 +1,12 @@
 User-agent: *
-Disallow:
+Allow: /
+Disallow: /login
+Disallow: /register
+Disallow: /logout
+Disallow: /email/verify*
+Disallow: /profile
+Disallow: /premium
+Disallow: /admin
+
+# Sitemap
+Sitemap: https://boasfarconvert.my.id/sitemap.xml

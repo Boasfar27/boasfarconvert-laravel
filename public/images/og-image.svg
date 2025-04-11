@@ -1,0 +1,73 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#111827"/>
+  <rect x="50" y="50" width="1100" height="530" rx="16" fill="#1F2937" stroke="#374151" stroke-width="2"/>
+  
+  <!-- Gradient overlay -->
+  <rect width="1200" height="630" fill="url(#paint0_linear)" fill-opacity="0.4"/>
+  
+  <!-- Logo and Title -->
+  <g transform="translate(240, 260)">
+    <!-- Logo Circle -->
+    <path d="M19.89 10.105a8.696 8.696 0 00-.789-1.456l-1.658 1.119a6.606 6.606 0 00-12.223 2.858 6.65 6.65 0 006.631 6.631A6.606 6.606 0 0018.103 12.5h-2.094a4.54 4.54 0 01-4.54 4.54 4.588 4.588 0 01-4.54-4.54 4.54 4.54 0 014.54-4.54 4.505 4.505 0 012.616.833l-1.532 1.03L19.89 10.106z" fill="#8B5CF6" transform="scale(5)" />
+    
+    <!-- Title -->
+    <text x="150" y="35" fill="white" font-family="Inter, sans-serif" font-size="65" font-weight="700">
+      Boasfar Convert
+    </text>
+    
+    <!-- Tagline -->
+    <text x="150" y="90" fill="#D1D5DB" font-family="Inter, sans-serif" font-size="28" font-weight="400">
+      Konversi File Online Terbaik di Indonesia
+    </text>
+  </g>
+  
+  <!-- Features -->
+  <g transform="translate(300, 430)">
+    <g transform="translate(0, 0)">
+      <circle cx="12" cy="12" r="12" fill="#8B5CF6" fill-opacity="0.2"/>
+      <path d="M7 12L10 15L16 9" stroke="#8B5CF6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="35" y="17" fill="#D1D5DB" font-family="Inter, sans-serif" font-size="20">
+        Konversi Gambar ke WebP
+      </text>
+    </g>
+    
+    <g transform="translate(320, 0)">
+      <circle cx="12" cy="12" r="12" fill="#8B5CF6" fill-opacity="0.2"/>
+      <path d="M7 12L10 15L16 9" stroke="#8B5CF6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="35" y="17" fill="#D1D5DB" font-family="Inter, sans-serif" font-size="20">
+        PDF ke Word
+      </text>
+    </g>
+    
+    <g transform="translate(0, 50)">
+      <circle cx="12" cy="12" r="12" fill="#8B5CF6" fill-opacity="0.2"/>
+      <path d="M7 12L10 15L16 9" stroke="#8B5CF6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="35" y="17" fill="#D1D5DB" font-family="Inter, sans-serif" font-size="20">
+        Word ke PDF
+      </text>
+    </g>
+    
+    <g transform="translate(320, 50)">
+      <circle cx="12" cy="12" r="12" fill="#8B5CF6" fill-opacity="0.2"/>
+      <path d="M7 12L10 15L16 9" stroke="#8B5CF6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="35" y="17" fill="#D1D5DB" font-family="Inter, sans-serif" font-size="20">
+        Gratis &amp; Cepat
+      </text>
+    </g>
+  </g>
+  
+  <!-- Decorative Elements -->
+  <circle cx="100" cy="100" r="50" fill="#8B5CF6" fill-opacity="0.1"/>
+  <circle cx="1100" cy="500" r="80" fill="#8B5CF6" fill-opacity="0.1"/>
+  <circle cx="150" cy="500" r="30" fill="#8B5CF6" fill-opacity="0.1"/>
+  <circle cx="1050" cy="150" r="40" fill="#8B5CF6" fill-opacity="0.1"/>
+  
+  <!-- Definitions -->
+  <defs>
+    <linearGradient id="paint0_linear" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#8B5CF6" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#7C3AED" stop-opacity="0.05"/>
+    </linearGradient>
+  </defs>
+</svg> 

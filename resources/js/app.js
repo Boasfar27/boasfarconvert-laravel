@@ -54,3 +54,57 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         }
     });
 });
+
+// FAQ Toggle
+document.addEventListener('DOMContentLoaded', function () {
+    const faqItems = document.querySelectorAll('.faq-item');
+
+    if (faqItems.length > 0) {
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+
+            question.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+
+                // Close all FAQs
+                faqItems.forEach(faq => {
+                    faq.classList.remove('active');
+                    const answer = faq.querySelector('.faq-answer');
+                    if (answer && faq !== item) {
+                        answer.style.maxHeight = '0';
+                        answer.style.opacity = '0';
+                    }
+                });
+
+                // Toggle current FAQ
+                if (!isActive) {
+                    item.classList.add('active');
+                    const answer = item.querySelector('.faq-answer');
+                    if (answer) {
+                        answer.style.maxHeight = answer.scrollHeight + 'px';
+                        answer.style.opacity = '1';
+                    }
+                }
+            });
+
+            // Initialize: hide all answers
+            const answer = item.querySelector('.faq-answer');
+            if (answer) {
+                answer.style.maxHeight = '0';
+                answer.style.opacity = '0';
+                answer.style.overflow = 'hidden';
+                answer.style.transition = 'max-height 0.5s ease, opacity 0.3s ease';
+            }
+        });
+
+        // Open first FAQ by default
+        if (faqItems[0]) {
+            faqItems[0].classList.add('active');
+            const answer = faqItems[0].querySelector('.faq-answer');
+            if (answer) {
+                answer.style.maxHeight = answer.scrollHeight + 'px';
+                answer.style.opacity = '1';
+            }
+        }
+    }
+});

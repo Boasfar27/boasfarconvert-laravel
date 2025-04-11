@@ -288,5 +288,120 @@
                 </div>
             </div>
         </section>
+
+        <!-- Artikel Blog dan FAQ (untuk SEO) -->
+        <section class="section blog-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Artikel Terbaru</h2>
+                    <p class="section-subtitle">Tips dan informasi seputar konversi file</p>
+                </div>
+
+                <div class="blog-container">
+                    <div class="blog-card">
+                        <div class="blog-image">
+                            <img src="{{ asset('images/blog-webp.jpg') }}" alt="Konversi ke WebP" class="img-fluid">
+                        </div>
+                        <div class="blog-content">
+                            <h3>Keunggulan Format WebP untuk Website Modern</h3>
+                            <p class="blog-date">Dipublikasikan: {{ now()->subDays(3)->format('d M Y') }}</p>
+                            <p>Format WebP menawarkan kompresi lebih baik dibandingkan JPEG dan PNG tanpa mengorbankan
+                                kualitas. Hal ini membuat website lebih cepat dan menghemat bandwidth.</p>
+                        </div>
+                    </div>
+
+                    <div class="blog-card">
+                        <div class="blog-image">
+                            <img src="{{ asset('images/blog-pdf.jpg') }}" alt="Konversi PDF ke Word" class="img-fluid">
+                        </div>
+                        <div class="blog-content">
+                            <h3>Mengapa Konversi PDF ke Word Penting untuk Produktivitas</h3>
+                            <p class="blog-date">Dipublikasikan: {{ now()->subDays(5)->format('d M Y') }}</p>
+                            <p>Kemampuan mengedit dokumen PDF dengan mengkonversinya ke format Word sangat penting untuk
+                                efisiensi kerja. Fitur ini memungkinkan editing tanpa harus mengetik ulang.</p>
+                        </div>
+                    </div>
+
+                    <div class="blog-card">
+                        <div class="blog-image">
+                            <img src="{{ asset('images/blog-convert.jpg') }}" alt="Konversi File" class="img-fluid">
+                        </div>
+                        <div class="blog-content">
+                            <h3>5 Cara Mengoptimalkan Ukuran File Gambar Tanpa Kehilangan Kualitas</h3>
+                            <p class="blog-date">Dipublikasikan: {{ now()->subDays(7)->format('d M Y') }}</p>
+                            <p>Optimasi gambar adalah kunci performance website. Pelajari cara mengurangi ukuran file tanpa
+                                mengorbankan kualitas visual untuk pengalaman pengguna yang lebih baik.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="section faq-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Pertanyaan Umum</h2>
+                    <p class="section-subtitle">Informasi yang sering ditanyakan seputar layanan kami</p>
+                </div>
+
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <h3 class="faq-question">Apa itu format WebP?</h3>
+                        <div class="faq-answer">
+                            <p>WebP adalah format gambar modern yang dikembangkan oleh Google. Format ini menawarkan
+                                kompresi yang lebih baik dibandingkan format JPEG dan PNG tradisional, sehingga menghasilkan
+                                file yang lebih kecil tanpa mengorbankan kualitas gambar secara signifikan. Dengan ukuran
+                                file yang lebih kecil, website dapat dimuat lebih cepat dan menghemat bandwidth.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <h3 class="faq-question">Bagaimana cara mengkonversi PDF ke Word?</h3>
+                        <div class="faq-answer">
+                            <p>Untuk mengkonversi PDF ke Word di platform kami, ikuti langkah-langkah berikut:</p>
+                            <ol>
+                                <li>Login ke akun Boasfar Convert Anda</li>
+                                <li>Pilih menu "Konversi PDF ke Word"</li>
+                                <li>Upload file PDF yang ingin dikonversi</li>
+                                <li>Klik tombol "Konversi"</li>
+                                <li>Tunggu proses konversi selesai</li>
+                                <li>Download file Word hasil konversi</li>
+                            </ol>
+                            <p>Fitur ini tersedia untuk pengguna premium. Jika Anda pengguna gratisan, Anda dapat
+                                mengupgrade akun Anda untuk menikmati fitur ini.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <h3 class="faq-question">Apakah layanan konversi file di Boasfar Convert aman?</h3>
+                        <div class="faq-answer">
+                            <p>Ya, layanan konversi file di Boasfar Convert sangat aman. Kami mengutamakan keamanan dan
+                                privasi data pengguna. Semua file yang diupload ke platform kami akan dihapus secara
+                                otomatis setelah 24 jam. Kami juga tidak pernah membaca, menganalisis, atau membagikan
+                                konten dari file yang diupload tanpa izin eksplisit dari pengguna.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <h3 class="faq-question">Berapa banyak file yang bisa saya konversi per hari?</h3>
+                        <div class="faq-answer">
+                            <p>Untuk pengguna gratisan, kami menyediakan batas 20 konversi per hari. Untuk pengguna premium,
+                                kami menyediakan konversi tak terbatas. Jika Anda memerlukan lebih banyak konversi, Anda
+                                dapat mengupgrade ke akun premium dengan biaya yang sangat terjangkau.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <h3 class="faq-question">Apakah Boasfar Convert mendukung konversi batch?</h3>
+                        <div class="faq-answer">
+                            <p>Ya, Boasfar Convert mendukung konversi batch untuk gambar. Anda dapat mengupload hingga 20
+                                gambar sekaligus untuk dikonversi ke format WebP. Untuk konversi PDF ke Word dan Word ke
+                                PDF, saat ini kami hanya mendukung konversi satu file per waktu.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 @endsection

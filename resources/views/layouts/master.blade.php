@@ -4,10 +4,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Boasfar Convert - Konversi gambar dan dokumen online dengan mudah">
-    <meta name="keywords" content="konversi, gambar, webp, jpg, png, pdf, word, online, indonesia">
-    <meta name="author" content="Boasfar Convert">
+
+    <!-- Primary Meta Tags -->
     <title>{{ config('app.name') }} - @yield('title', 'Konversi Gambar dan Dokumen Online')</title>
+    <meta name="title" content="{{ config('app.name') }} - Konversi Gambar dan Dokumen Online">
+    <meta name="description"
+        content="Boasfar Convert - Platform konversi file terbaik di Indonesia. Konversi gambar ke WebP, PDF ke Word, dan Word ke PDF dengan mudah dan gratis. Hasil konversi berkualitas tinggi.">
+    <meta name="keywords"
+        content="konversi gambar, konversi pdf, konversi word, webp converter, jpg to webp, png to webp, pdf to word, word to pdf, konversi online, konversi file gratis, indonesia">
+    <meta name="author" content="Boasfar Convert">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="Indonesia">
+    <meta name="revisit-after" content="7 days">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:title" content="{{ config('app.name') }} - Konversi Gambar dan Dokumen Online">
+    <meta property="og:description"
+        content="Platform konversi file terbaik di Indonesia. Konversi gambar ke WebP, PDF ke Word, dan Word ke PDF dengan mudah dan gratis.">
+    <meta property="og:image" content="{{ asset('images/og-image.png') }}">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="{{ url()->current() }}">
+    <meta property="twitter:title" content="{{ config('app.name') }} - Konversi Gambar dan Dokumen Online">
+    <meta property="twitter:description"
+        content="Platform konversi file terbaik di Indonesia. Konversi gambar ke WebP, PDF ke Word, dan Word ke PDF dengan mudah dan gratis.">
+    <meta property="twitter:image" content="{{ asset('images/og-image.png') }}">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="{{ url()->current() }}">
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7311209549685817"
+        crossorigin="anonymous"></script>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -25,6 +56,38 @@
 
     <!-- Extra CSS -->
     @stack('styles')
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "{{ config('app.name') }}",
+      "url": "{{ url('/') }}",
+      "logo": "{{ asset('images/og-image.svg') }}",
+      "sameAs": [
+        "https://twitter.com/boasfarconvert",
+        "https://facebook.com/boasfarconvert",
+        "https://instagram.com/boasfarconvert"
+      ],
+      "description": "Platform konversi file terbaik di Indonesia. Konversi gambar ke WebP, PDF ke Word, dan Word ke PDF dengan mudah dan gratis."
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "url": "{{ url('/') }}",
+      "name": "{{ config('app.name') }} - Konversi Gambar dan Dokumen Online",
+      "description": "Boasfar Convert - Platform konversi file terbaik di Indonesia. Konversi gambar ke WebP, PDF ke Word, dan Word ke PDF dengan mudah dan gratis.",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "{{ url('/convert') }}?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
 </head>
 
 <body>
