@@ -68,7 +68,7 @@
       "sameAs": [
         "https://twitter.com/boasfarconvert",
         "https://facebook.com/boasfarconvert",
-        "https://instagram.com/boasfarconvert"
+        "https://www.instagram.com/farhaaan____/"
       ],
       "description": "Platform konversi file terbaik di Indonesia. Konversi gambar ke WebP, PDF ke Word, dan Word ke PDF dengan mudah dan gratis."
     }
