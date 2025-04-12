@@ -133,3 +133,7 @@ Route::get('/test-403', function () {
 Route::get('/test-419', function () {
     abort(419);
 });
+
+// Blog routes
+Route::get('/artikel', [App\Http\Controllers\ArtikelController::class, 'index'])->name('artikel.index');
+Route::get('/artikel/{slug}', [App\Http\Controllers\ArtikelController::class, 'show'])->name('artikel.show');

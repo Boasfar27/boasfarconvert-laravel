@@ -14,6 +14,9 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         $schedule->command('sitemap:generate')->daily();
+        
+        // Cek artikel terjadwal setiap menit
+        $schedule->command('app:publish-scheduled-articles')->everyMinute();
     }
 
     /**

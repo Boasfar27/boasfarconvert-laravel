@@ -103,7 +103,8 @@ class ConversionStatisticResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Tanggal')
-                    ->dateTime()
+                    ->dateTime('d M Y H:i')
+                    ->timezone('Asia/Jakarta')
                     ->sortable(),
             ])
             ->filters([

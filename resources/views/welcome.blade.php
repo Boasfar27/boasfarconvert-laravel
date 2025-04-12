@@ -18,7 +18,7 @@
                         </div>
                     </div>
                     <div class="hero-image" data-aos="fade-left">
-                        <img src="{{ asset('images/amico.png') }}" alt="Boasfar Convert Platform">
+                        <img src="{{ asset('images/amico.webp') }}" alt="Boasfar Convert Platform">
                         <div class="floating-card card-1">
                             <div class="card-icon">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -283,56 +283,110 @@
                         </div>
                     </div>
                     <div class="cta-image">
-                        <img src="{{ asset('images/cuate.png') }}" alt="Boasfar Convert Platform">
+                        <img src="{{ asset('images/cuate.webp') }}" alt="Boasfar Convert Platform">
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Artikel Blog dan FAQ (untuk SEO) -->
-        <section class="section blog-section">
+        <section class="section artikel-section">
             <div class="container">
-                <div class="section-header">
-                    <h2 class="section-title">Artikel Terbaru</h2>
-                    <p class="section-subtitle">Tips dan informasi seputar konversi file</p>
+                <div class="section-header" data-aos="fade-up">
+                    <span class="section-tag">Artikel Terbaru</span>
+                    <h2 class="section-title">Tips dan Tutorial <span class="text-gradient">Konversi File</span></h2>
+                    <p class="section-description">Pelajari informasi seputar konversi file dan tips produktivitas</p>
                 </div>
 
-                <div class="blog-container">
-                    <div class="blog-card">
-                        <div class="blog-image">
-                            <img src="{{ asset('images/blog-webp.jpg') }}" alt="Konversi ke WebP" class="img-fluid">
-                        </div>
-                        <div class="blog-content">
-                            <h3>Keunggulan Format WebP untuk Website Modern</h3>
-                            <p class="blog-date">Dipublikasikan: {{ now()->subDays(3)->format('d M Y') }}</p>
-                            <p>Format WebP menawarkan kompresi lebih baik dibandingkan JPEG dan PNG tanpa mengorbankan
-                                kualitas. Hal ini membuat website lebih cepat dan menghemat bandwidth.</p>
-                        </div>
-                    </div>
+                <div class="row justify-content-center">
+                    @php
+                        $latestArticles = \App\Models\Article::published()
+                            ->with('author')
+                            ->orderBy('published_at', 'desc')
+                            ->limit(3)
+                            ->get();
 
-                    <div class="blog-card">
-                        <div class="blog-image">
-                            <img src="{{ asset('images/blog-pdf.jpg') }}" alt="Konversi PDF ke Word" class="img-fluid">
-                        </div>
-                        <div class="blog-content">
-                            <h3>Mengapa Konversi PDF ke Word Penting untuk Produktivitas</h3>
-                            <p class="blog-date">Dipublikasikan: {{ now()->subDays(5)->format('d M Y') }}</p>
-                            <p>Kemampuan mengedit dokumen PDF dengan mengkonversinya ke format Word sangat penting untuk
-                                efisiensi kerja. Fitur ini memungkinkan editing tanpa harus mengetik ulang.</p>
-                        </div>
-                    </div>
+                        // Data placeholder untuk artikel
+                        $placeholders = [
+                            [
+                                'title' => 'Keunggulan Format WebP untuk Website Modern',
+                                'date' => now()->subDays(3),
+                                'image' => 'blog-webp.jpg',
+                            ],
+                            [
+                                'title' => 'Mengapa Konversi PDF ke Word Penting untuk Produktivitas',
+                                'date' => now()->subDays(5),
+                                'image' => 'blog-pdf.jpg',
+                            ],
+                            [
+                                'title' => '5 Cara Mengoptimalkan Ukuran File Gambar',
+                                'date' => now()->subDays(7),
+                                'image' => 'blog-convert.jpg',
+                            ],
+                        ];
+                    @endphp
 
-                    <div class="blog-card">
-                        <div class="blog-image">
-                            <img src="{{ asset('images/blog-convert.jpg') }}" alt="Konversi File" class="img-fluid">
+                    @for ($i = 0; $i < 3; $i++)
+                        <div class="col-md-4" data-aos="fade-up" data-aos-delay="{{ ($i + 1) * 100 }}">
+                            <div class="artikel-card h-100">
+                                @if ($i < $latestArticles->count())
+                                    <div class="artikel-image">
+                                        <a href="{{ route('artikel.show', $latestArticles[$i]->slug) }}">
+                                            <img src="{{ $latestArticles[$i]->thumbnail_url }}"
+                                                alt="{{ $latestArticles[$i]->title }}" class="img-fluid">
+                                        </a>
+                                    </div>
+                                    <div class="artikel-content">
+                                        <div class="artikel-meta">
+                                            <span class="artikel-category">{{ $latestArticles[$i]->category }}</span>
+                                            <span class="artikel-date">{{ $latestArticles[$i]->formatted_date }}</span>
+                                        </div>
+                                        <h3 class="artikel-title">
+                                            <a
+                                                href="{{ route('artikel.show', $latestArticles[$i]->slug) }}">{{ $latestArticles[$i]->title }}</a>
+                                        </h3>
+                                        <div class="artikel-excerpt">
+                                            {!! Str::limit(strip_tags($latestArticles[$i]->excerpt), 100) !!}
+                                        </div>
+                                        <div class="artikel-footer">
+                                            <a href="{{ route('artikel.show', $latestArticles[$i]->slug) }}"
+                                                class="read-more">Baca selengkapnya</a>
+                                        </div>
+                                    </div>
+                                @else
+                                    <div class="artikel-image">
+                                        <a href="{{ route('artikel.index') }}">
+                                            <img src="{{ asset('images/' . $placeholders[$i]['image']) }}"
+                                                alt="{{ $placeholders[$i]['title'] }}" class="img-fluid">
+                                        </a>
+                                    </div>
+                                    <div class="artikel-content">
+                                        <div class="artikel-meta">
+                                            <span class="artikel-category">Tutorial</span>
+                                            <span
+                                                class="artikel-date">{{ $placeholders[$i]['date']->format('d M Y') }}</span>
+                                        </div>
+                                        <h3 class="artikel-title">
+                                            <a href="{{ route('artikel.index') }}">{{ $placeholders[$i]['title'] }}</a>
+                                        </h3>
+                                        <div class="artikel-excerpt">
+                                            <p>Format WebP menawarkan kompresi lebih baik dibandingkan JPEG dan PNG tanpa
+                                                mengorbankan kualitas. Hal ini membuat website lebih cepat dan menghemat
+                                                bandwidth.</p>
+                                        </div>
+                                        <div class="artikel-footer">
+                                            <a href="{{ route('artikel.index') }}" class="read-more">Baca
+                                                selengkapnya</a>
+                                        </div>
+                                    </div>
+                                @endif
+                            </div>
                         </div>
-                        <div class="blog-content">
-                            <h3>5 Cara Mengoptimalkan Ukuran File Gambar Tanpa Kehilangan Kualitas</h3>
-                            <p class="blog-date">Dipublikasikan: {{ now()->subDays(7)->format('d M Y') }}</p>
-                            <p>Optimasi gambar adalah kunci performance website. Pelajari cara mengurangi ukuran file tanpa
-                                mengorbankan kualitas visual untuk pengalaman pengguna yang lebih baik.</p>
-                        </div>
-                    </div>
+                    @endfor
+                </div>
+
+                <div class="text-center" data-aos="fade-up">
+                    <a href="{{ route('artikel.index') }}" class="btn btn-primary">Lihat Semua Artikel</a>
                 </div>
             </div>
         </section>

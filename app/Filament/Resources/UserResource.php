@@ -30,7 +30,9 @@ class UserResource extends Resource
                     ->email()
                     ->required()
                     ->maxLength(255),
-                Forms\Components\DateTimePicker::make('email_verified_at'),
+                Forms\Components\DateTimePicker::make('email_verified_at')
+                    ->timezone('Asia/Jakarta')
+                    ->displayFormat('d M Y H:i'),
                 Forms\Components\TextInput::make('password')
                     ->password()
                     ->required()
@@ -45,7 +47,9 @@ class UserResource extends Resource
                     ->required()
                     ->numeric()
                     ->default(0),
-                Forms\Components\DatePicker::make('last_conversion_date'),
+                Forms\Components\DatePicker::make('last_conversion_date')
+                    ->timezone('Asia/Jakarta')
+                    ->displayFormat('d M Y'),
             ]);
     }
 
@@ -58,14 +62,17 @@ class UserResource extends Resource
                 Tables\Columns\TextColumn::make('email')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email_verified_at')
-                    ->dateTime()
+                    ->dateTime('d M Y H:i')
+                    ->timezone('Asia/Jakarta')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
+                    ->dateTime('d M Y H:i')
+                    ->timezone('Asia/Jakarta')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->dateTime('d M Y H:i')
+                    ->timezone('Asia/Jakarta')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('role')
@@ -77,7 +84,8 @@ class UserResource extends Resource
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('last_conversion_date')
-                    ->date()
+                    ->date('d M Y')
+                    ->timezone('Asia/Jakarta')
                     ->sortable(),
             ])
             ->filters([

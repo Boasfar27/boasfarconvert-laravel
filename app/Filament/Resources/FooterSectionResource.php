@@ -72,12 +72,14 @@ class FooterSectionResource extends Resource
                     ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Dibuat')
-                    ->dateTime()
+                    ->dateTime('d M Y H:i')
+                    ->timezone('Asia/Jakarta')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->label('Diperbarui')
-                    ->dateTime()
+                    ->dateTime('d M Y H:i')
+                    ->timezone('Asia/Jakarta')
                     ->sortable(),
             ])
             ->filters([

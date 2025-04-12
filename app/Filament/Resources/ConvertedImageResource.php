@@ -108,7 +108,8 @@ class ConvertedImageResource extends Resource
                     ->formatStateUsing(fn ($state) => $state . '%'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Tanggal')
-                    ->dateTime()
+                    ->dateTime('d M Y H:i')
+                    ->timezone('Asia/Jakarta')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('conversion_type')
                     ->label('Tipe')
