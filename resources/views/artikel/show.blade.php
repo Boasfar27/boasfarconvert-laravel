@@ -123,7 +123,7 @@
         .bc-article-page {
             background-color: var(--bg-secondary);
             padding-bottom: 4rem;
-            padding-top: 2rem;
+            padding-top: 6rem;
         }
 
         .bc-article-detail {
@@ -132,6 +132,8 @@
 
         .bc-article-header {
             margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
         }
 
         .bc-article-meta {

@@ -17,5 +17,7 @@ class DatabaseSeeder extends Seeder
             FooterSectionSeeder::class,
             ArticleSeeder::class,
         ]);
+
+        $this->call(StaticPageSeeder::class);
     }
 }

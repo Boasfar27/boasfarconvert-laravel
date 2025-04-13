@@ -64,7 +64,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-4">
+                    {{-- <div class="col-md-4">
                         <div class="artikel-sidebar">
                             <div class="sidebar-block">
                                 <h3>Kategori</h3>
@@ -89,7 +89,7 @@
                                 </ul>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </section>

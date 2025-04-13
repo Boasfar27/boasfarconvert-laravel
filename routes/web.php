@@ -134,6 +134,11 @@ Route::get('/test-419', function () {
     abort(419);
 });
 
-// Blog routes
+// artikel routes
 Route::get('/artikel', [App\Http\Controllers\ArtikelController::class, 'index'])->name('artikel.index');
 Route::get('/artikel/{slug}', [App\Http\Controllers\ArtikelController::class, 'show'])->name('artikel.show');
+
+// Static page routes
+Route::get('/tentang-kami', [App\Http\Controllers\StaticPageController::class, 'show'])->name('tentang-kami')->defaults('slug', 'tentang-kami');
+Route::get('/kebijakan-privasi', [App\Http\Controllers\StaticPageController::class, 'show'])->name('kebijakan-privasi')->defaults('slug', 'kebijakan-privasi');
+Route::get('/syarat-ketentuan', [App\Http\Controllers\StaticPageController::class, 'show'])->name('syarat-ketentuan')->defaults('slug', 'syarat-ketentuan');

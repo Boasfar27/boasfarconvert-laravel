@@ -58,7 +58,7 @@
                 <h3 class="footer-title">Tentang</h3>
                 <div class="footer-menu">
                     <a href="/tentang-kami">Tentang Kami</a>
-                    <a href="/blog">Blog</a>
+                    <a href="/artikel">Artikel</a>
                     <a href="/kebijakan-privasi">Kebijakan Privasi</a>
                     <a href="/syarat-ketentuan">Syarat & Ketentuan</a>
                 </div>
