@@ -30,4 +30,63 @@
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
+    <url>
+    <loc>http://localhost/artikel</loc>
+    <lastmod>2025-04-11T17:17:07+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+            </url>
+    <url>
+    <loc>http://localhost/tentang-kami</loc>
+    <lastmod>2025-04-11T17:17:07+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+            </url>
+    <url>
+    <loc>http://localhost/kebijakan-privasi</loc>
+    <lastmod>2025-04-11T17:17:07+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+            </url>
+    <url>
+    <loc>http://localhost/syarat-ketentuan</loc>
+    <lastmod>2025-04-11T17:17:07+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+            </url>
+
+    <url>
+    <loc>http://localhost/premium</loc>
+    <lastmod>2025-04-11T17:17:07+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+            </url>
+
+    <url>
+    <loc>http://localhost/login</loc>
+    <lastmod>2025-04-11T17:17:07+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+            </url>
+    <url>
+    <loc>http://localhost/register</loc>
+    <lastmod>2025-04-11T17:17:07+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+            </url>
+
+    <url>
+    <loc>http://localhost/dashboard</loc>
+    <lastmod>2025-04-11T17:17:07+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+            </url>
+
+    <url>
+    <loc>http://localhost/admin</loc>
+    <lastmod>2025-04-11T17:17:07+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+            </url>
+        
 </urlset>

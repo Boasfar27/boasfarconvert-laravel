@@ -36,6 +36,15 @@
     <!-- Canonical URL -->
     <link rel="canonical" href="{{ url()->current() }}">
 
+    <!-- Favicon -->
+    <link rel="icon" href="{{ asset('favicon.png') }}">
+    <link rel="shortcut icon" href="{{ asset('favicon.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('favicon.png') }}">
+    <link rel="manifest" href="{{ asset('site.webmanifest') }}">
+    <meta name="msapplication-TileImage" content="{{ asset('favicon.png') }}">
+    <meta name="msapplication-TileColor" content="#6d28d9">
+    <meta name="theme-color" content="#6d28d9">
+
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7311209549685817"
         crossorigin="anonymous"></script>
