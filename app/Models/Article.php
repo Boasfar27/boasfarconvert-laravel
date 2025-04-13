@@ -88,7 +88,20 @@ class Article extends Model
     public function getThumbnailUrlAttribute()
     {
         if ($this->thumbnail) {
-            return asset('storage/' . $this->thumbnail);
+            // Gunakan path langsung jika file ada di public/storage
+            $direct_path = public_path('storage/' . $this->thumbnail);
+            if (file_exists($direct_path)) {
+                return asset('storage/' . $this->thumbnail);
+            }
+            
+            // Atau coba di storage/app/public jika ada symlink
+            $storage_path = storage_path('app/public/' . $this->thumbnail);
+            if (file_exists($storage_path)) {
+                return asset('storage/' . $this->thumbnail);
+            }
+            
+            // Jika masih tidak ditemukan, coba gunakan URL langsung
+            return $this->thumbnail;
         }
         
         return asset('images/default-article.jpg');

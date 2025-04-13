@@ -68,6 +68,7 @@ class ArticleResource extends Resource
                         FileUpload::make('thumbnail')
                             ->label('Gambar Thumbnail')
                             ->image()
+                            ->disk('public_direct')
                             ->directory('article-thumbnails')
                             ->columnSpanFull()
                             ->imageResizeMode('cover')
@@ -85,6 +86,7 @@ class ArticleResource extends Resource
                             ->label('Konten')
                             ->required()
                             ->columnSpanFull()
+                            ->fileAttachmentsDisk('public_direct')
                             ->fileAttachmentsDirectory('article-attachments'),
                     ])
                     ->columns(2),
