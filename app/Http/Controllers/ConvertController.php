@@ -140,6 +140,11 @@ class ConvertController extends Controller
      */
     public function showPdfToWordForm()
     {
+        // Additional check for role 0 users to prevent direct URL access
+        if (auth()->user()->isUser()) {
+            return redirect()->route('convert.index')->with('error', 'Fitur ini hanya tersedia untuk pengguna premium.');
+        }
+        
         return view('convert.pdf-to-word');
     }
 
@@ -148,6 +153,11 @@ class ConvertController extends Controller
      */
     public function showWordToPdfForm()
     {
+        // Additional check for role 0 users to prevent direct URL access
+        if (auth()->user()->isUser()) {
+            return redirect()->route('convert.index')->with('error', 'Fitur ini hanya tersedia untuk pengguna premium.');
+        }
+        
         return view('convert.word-to-pdf');
     }
 
@@ -156,6 +166,11 @@ class ConvertController extends Controller
      */
     public function pdfToWord(Request $request)
     {
+        // Additional check for role 0 users to prevent direct access
+        if (auth()->user()->isUser()) {
+            return redirect()->route('convert.index')->with('error', 'Fitur ini hanya tersedia untuk pengguna premium.');
+        }
+        
         $request->validate([
             'pdf' => 'required|mimes:pdf|max:10240',
         ]);
@@ -319,6 +334,11 @@ class ConvertController extends Controller
      */
     public function wordToPdf(Request $request)
     {
+        // Additional check for role 0 users to prevent direct access
+        if (auth()->user()->isUser()) {
+            return redirect()->route('convert.index')->with('error', 'Fitur ini hanya tersedia untuk pengguna premium.');
+        }
+        
         $request->validate([
             'word' => 'required|mimes:doc,docx|max:10240',
         ]);
@@ -539,6 +559,11 @@ class ConvertController extends Controller
      */
     public function wordToPdfCloudConvert(Request $request)
     {
+        // Additional check for role 0 users to prevent direct access
+        if (auth()->user()->isUser()) {
+            return redirect()->route('convert.index')->with('error', 'Fitur ini hanya tersedia untuk pengguna premium.');
+        }
+        
         $request->validate([
             'word' => 'required|mimes:doc,docx|max:10240',
         ]);
@@ -669,6 +694,11 @@ class ConvertController extends Controller
      */
     public function pdfToWordCloudConvert(Request $request)
     {
+        // Additional check for role 0 users to prevent direct access
+        if (auth()->user()->isUser()) {
+            return redirect()->route('convert.index')->with('error', 'Fitur ini hanya tersedia untuk pengguna premium.');
+        }
+        
         $request->validate([
             'pdf' => 'required|mimes:pdf|max:10240',
         ]);

@@ -169,7 +169,7 @@
                                 </li>
                             </ul>
 
-                            <span class="btn btn-outline disabled">Fitur Premium</span>
+                            <a href="{{ route('premium.index') }}" class="btn btn-primary">Upgrade ke Premium</a>
                         </div>
                     </div>
 
@@ -210,7 +210,7 @@
                                 </li>
                             </ul>
 
-                            <span class="btn btn-outline disabled">Fitur Premium</span>
+                            <a href="{{ route('premium.index') }}" class="btn btn-primary">Upgrade ke Premium</a>
                         </div>
                     </div>
                 @endif
