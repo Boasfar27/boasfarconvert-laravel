@@ -20,6 +20,14 @@ use CloudConvert\Models\Task;
 class ConvertController extends Controller
 {
     /**
+     * Display the convert index page
+     */
+    public function index()
+    {
+        return view('convert.index');
+    }
+
+    /**
      * Display the form to upload images
      */
     public function showImageForm()

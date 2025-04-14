@@ -1,89 +1,89 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
     <url>
-    <loc>http://localhost</loc>
+    <loc>https://boasfarconvert.my.id</loc>
     <lastmod>2025-04-11T17:17:07+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
             </url>
     <url>
-    <loc>http://localhost/convert</loc>
+    <loc>https://boasfarconvert.my.id/convert</loc>
     <lastmod>2025-04-11T17:17:07+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
             </url>
     <url>
-    <loc>http://localhost/convert/image</loc>
+    <loc>https://boasfarconvert.my.id/convert/image</loc>
     <lastmod>2025-04-11T17:17:07+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost/convert/pdf-to-word</loc>
+    <loc>https://boasfarconvert.my.id/convert/pdf-to-word</loc>
     <lastmod>2025-04-11T17:17:07+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost/convert/word-to-pdf</loc>
+    <loc>https://boasfarconvert.my.id/convert/word-to-pdf</loc>
     <lastmod>2025-04-11T17:17:07+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost/artikel</loc>
+    <loc>https://boasfarconvert.my.id/artikel</loc>
     <lastmod>2025-04-11T17:17:07+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost/tentang-kami</loc>
+    <loc>https://boasfarconvert.my.id/tentang-kami</loc>
     <lastmod>2025-04-11T17:17:07+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost/kebijakan-privasi</loc>
+    <loc>https://boasfarconvert.my.id/kebijakan-privasi</loc>
     <lastmod>2025-04-11T17:17:07+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost/syarat-ketentuan</loc>
-    <lastmod>2025-04-11T17:17:07+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-            </url>
-
-    <url>
-    <loc>http://localhost/premium</loc>
+    <loc>https://boasfarconvert.my.id/syarat-ketentuan</loc>
     <lastmod>2025-04-11T17:17:07+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
 
     <url>
-    <loc>http://localhost/login</loc>
-    <lastmod>2025-04-11T17:17:07+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-            </url>
-    <url>
-    <loc>http://localhost/register</loc>
+    <loc>https://boasfarconvert.my.id/premium</loc>
     <lastmod>2025-04-11T17:17:07+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
 
     <url>
-    <loc>http://localhost/dashboard</loc>
+    <loc>https://boasfarconvert.my.id/login</loc>
+    <lastmod>2025-04-11T17:17:07+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+            </url>
+    <url>
+    <loc>https://boasfarconvert.my.id/register</loc>
     <lastmod>2025-04-11T17:17:07+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
 
     <url>
-    <loc>http://localhost/admin</loc>
+    <loc>https://boasfarconvert.my.id/dashboard</loc>
+    <lastmod>2025-04-11T17:17:07+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+            </url>
+
+    <url>
+    <loc>https://boasfarconvert.my.id/admin</loc>
     <lastmod>2025-04-11T17:17:07+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>

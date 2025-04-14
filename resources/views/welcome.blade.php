@@ -18,7 +18,7 @@
                         </div>
                     </div>
                     <div class="hero-image" data-aos="fade-left">
-                        <img src="{{ asset('images/amico.webp') }}" alt="Boasfar Convert Platform">
+                        {{-- <img src="{{ asset('images/amico.webp') }}" alt="Boasfar Convert Platform"> --}}
                         <div class="floating-card card-1">
                             <div class="card-icon">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">

@@ -99,11 +99,6 @@ Route::middleware('auth')->group(function () {
     */
 });
 
-// Conversion Routes
-Route::get('/convert', [ConvertController::class, 'index'])->name('convert.index');
-Route::get('/convert/image', [ConvertController::class, 'showImageForm'])->name('convert.image.form');
-Route::post('/convert/image', [ConvertController::class, 'convertImage'])->name('convert.image');
-
 // PDF and Word conversion routes (restricted to premium and admin users only)
 Route::middleware(CheckRole::class . ':premium,admin')->group(function () {
     Route::get('/convert/pdf-to-word', [ConvertController::class, 'showPdfToWordForm'])->name('convert.pdf-to-word.form');
