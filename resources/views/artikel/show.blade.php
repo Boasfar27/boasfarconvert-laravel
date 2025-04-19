@@ -2,6 +2,11 @@
 
 @section('title', $article->title)
 
+@section('og_title', $article->title)
+@section('og_description', Str::limit(strip_tags($article->content), 160))
+@section('og_image', asset($article->thumbnail_url))
+@section('og_type', 'article')
+
 @section('content')
     <main class="bc-article-page">
         <article class="bc-article-detail">
@@ -15,7 +20,7 @@
                             </div>
                             <h1 class="bc-article-title">{{ $article->title }}</h1>
                             <div class="bc-article-author">
-                                <span>Oleh: {{ $article->author->name }}</span>
+                                <span><i class="fas fa-user"></i> {{ $article->author->name }}</span>
                                 <span class="bc-article-views"><i class="fas fa-eye"></i> {{ $article->views }} kali
                                     dibaca</span>
                             </div>
@@ -43,21 +48,13 @@
                                         target="_blank" class="bc-share-btn bc-facebook" aria-label="Share to Facebook">
                                         <i class="fab fa-facebook-f"></i>
                                     </a>
-                                    <a href="https://twitter.com/intent/tweet?url={{ urlencode(route('artikel.show', $article->slug)) }}&text={{ urlencode($article->title) }}"
-                                        target="_blank" class="bc-share-btn bc-twitter" aria-label="Share to Twitter">
-                                        <i class="fab fa-twitter"></i>
-                                    </a>
-                                    <a href="https://wa.me/?text={{ urlencode($article->title . ' - ' . route('artikel.show', $article->slug)) }}"
+                                    <a href="https://wa.me/?text={{ urlencode($article->title . "\n\n" . route('artikel.show', $article->slug)) }}"
                                         target="_blank" class="bc-share-btn bc-whatsapp" aria-label="Share to WhatsApp">
                                         <i class="fab fa-whatsapp"></i>
                                     </a>
-                                    <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ urlencode(route('artikel.show', $article->slug)) }}"
-                                        target="_blank" class="bc-share-btn bc-linkedin" aria-label="Share to LinkedIn">
-                                        <i class="fab fa-linkedin-in"></i>
-                                    </a>
-                                    <a href="mailto:?subject={{ urlencode($article->title) }}&body={{ urlencode('Baca artikel ini: ' . route('artikel.show', $article->slug)) }}"
-                                        class="bc-share-btn bc-email" aria-label="Share via Email">
-                                        <i class="fas fa-envelope"></i>
+                                    <a href="https://www.instagram.com/create/story?url={{ urlencode(route('artikel.show', $article->slug)) }}&title={{ urlencode($article->title) }}&sourceUrl={{ urlencode(asset($article->thumbnail_url)) }}"
+                                        target="_blank" class="bc-share-btn bc-instagram" aria-label="Share to Instagram">
+                                        <i class="fab fa-instagram"></i>
                                     </a>
                                 </div>
                             </div>
@@ -91,7 +88,8 @@
                                                 href="{{ route('artikel.show', $related->slug) }}">{{ $related->title }}</a>
                                         </h3>
                                         <div class="bc-artikel-footer">
-                                            <span class="bc-artikel-author">Oleh: {{ $related->author->name }}</span>
+                                            <span class="bc-artikel-author"><i class="fas fa-user"></i>
+                                                {{ $related->author->name }}</span>
                                             <span class="bc-artikel-views"><i class="fas fa-eye"></i>
                                                 {{ $related->views }}</span>
                                         </div>
@@ -281,20 +279,12 @@
             background-color: #3b5998;
         }
 
-        .bc-share-btn.bc-twitter {
-            background-color: #1da1f2;
-        }
-
         .bc-share-btn.bc-whatsapp {
             background-color: #25d366;
         }
 
-        .bc-share-btn.bc-linkedin {
-            background-color: #0077b5;
-        }
-
-        .bc-share-btn.bc-email {
-            background-color: #dd4b39;
+        .bc-share-btn.bc-instagram {
+            background-color: #e4405f;
         }
 
         .bc-related-articles {

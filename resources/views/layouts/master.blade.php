@@ -7,31 +7,37 @@
 
     <!-- Primary Meta Tags -->
     <title>{{ config('app.name') }} - @yield('title', 'Konversi Gambar dan Dokumen Online')</title>
-    <meta name="title" content="{{ config('app.name') }} - Konversi Gambar dan Dokumen Online">
-    <meta name="description"
-        content="Boasfar Convert - Platform konversi file terbaik di Indonesia. Konversi gambar ke WebP, PDF ke Word, dan Word ke PDF dengan mudah dan gratis. Hasil konversi berkualitas tinggi.">
-    <meta name="keywords"
-        content="konversi gambar, konversi pdf, konversi word, webp converter, jpg to webp, png to webp, pdf to word, word to pdf, konversi online, konversi file gratis, indonesia">
+    <meta name="title" content="@yield('meta_title', config('app.name') . ' - Konversi Gambar dan Dokumen Online')">
+    <meta name="description" content="@yield('meta_description', 'Boasfar Convert - Platform konversi file terbaik di Indonesia. Konversi gambar ke WebP, PDF ke Word, dan Word ke PDF dengan mudah dan gratis. Hasil konversi berkualitas tinggi.')">
+    <meta name="keywords" content="@yield('meta_keywords', 'konversi gambar, konversi pdf, konversi word, webp converter, jpg to webp, png to webp, pdf to word, word to pdf, konversi online, konversi file gratis, indonesia')">
     <meta name="author" content="Boasfar Convert">
     <meta name="robots" content="index, follow">
     <meta name="language" content="Indonesia">
     <meta name="revisit-after" content="7 days">
 
     <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
+    <meta property="og:type" content="@yield('og_type', 'website')">
     <meta property="og:url" content="{{ url()->current() }}">
-    <meta property="og:title" content="{{ config('app.name') }} - Konversi Gambar dan Dokumen Online">
-    <meta property="og:description"
-        content="Platform konversi file terbaik di Indonesia. Konversi gambar ke WebP, PDF ke Word, dan Word ke PDF dengan mudah dan gratis.">
-    <meta property="og:image" content="{{ asset('images/og-image.png') }}">
+    <meta property="og:title" content="@yield('og_title', $article->title ?? config('app.name') . ' - Konversi Gambar dan Dokumen Online')">
+    <meta property="og:description" content="@yield('og_description', isset($article) ? Str::limit(strip_tags($article->content), 160) : 'Platform konversi file terbaik di Indonesia. Konversi gambar ke WebP, PDF ke Word, dan Word ke PDF dengan mudah dan gratis.')">
+    <meta property="og:image" content="@yield('og_image', isset($article) ? asset($article->thumbnail_url) : asset('images/og-image.png'))">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="{{ config('app.name') }}">
 
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="{{ url()->current() }}">
-    <meta property="twitter:title" content="{{ config('app.name') }} - Konversi Gambar dan Dokumen Online">
-    <meta property="twitter:description"
-        content="Platform konversi file terbaik di Indonesia. Konversi gambar ke WebP, PDF ke Word, dan Word ke PDF dengan mudah dan gratis.">
-    <meta property="twitter:image" content="{{ asset('images/og-image.png') }}">
+    <!-- WhatsApp Specific -->
+    <meta property="og:app_id" content="boasfarconvert">
+    <meta property="og:locale" content="id_ID">
+    <meta property="og:image:secure_url" content="@yield('og_image', isset($article) ? asset($article->thumbnail_url) : asset('images/og-image.png'))">
+    <meta property="og:image:alt" content="@yield('og_title', $article->title ?? config('app.name') . ' - Konversi Gambar dan Dokumen Online')">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="{{ url()->current() }}">
+    <meta name="twitter:title" content="@yield('og_title', $article->title ?? config('app.name') . ' - Konversi Gambar dan Dokumen Online')">
+    <meta name="twitter:description" content="@yield('og_description', isset($article) ? Str::limit(strip_tags($article->content), 160) : 'Platform konversi file terbaik di Indonesia. Konversi gambar ke WebP, PDF ke Word, dan Word ke PDF dengan mudah dan gratis.')">
+    <meta name="twitter:image" content="@yield('og_image', isset($article) ? asset($article->thumbnail_url) : asset('images/og-image.png'))">
+    <meta name="twitter:creator" content="@boasfarconvert">
 
     <!-- Canonical URL -->
     <link rel="canonical" href="{{ url()->current() }}">
@@ -56,6 +62,11 @@
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- FontAwesome untuk ikon terbaru -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- Alpine.js - Lazy loaded -->
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>

@@ -46,9 +46,10 @@
                                             {!! Str::limit(strip_tags($article->excerpt), 150) !!}
                                         </div>
                                         <div class="artikel-footer">
-                                            <span class="artikel-author">Oleh: {{ $article->author->name }}</span>
-                                            <span class="artikel-views"><i class="fas fa-eye"></i>
-                                                {{ $article->views }}</span>
+                                            <span class="artikel-author"><i class="far fa-user"></i>
+                                                {{ $article->author->name }}</span>
+                                            <span class="artikel-views"><i class="far fa-eye"></i>
+                                                {{ number_format($article->views) }}</span>
                                         </div>
                                     </div>
                                 </div>
