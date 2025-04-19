@@ -30,8 +30,8 @@
                                 <div class="artikel-card">
                                     <div class="artikel-image">
                                         <a href="{{ route('artikel.show', $article->slug) }}">
-                                            <img src="{{ $article->thumbnail_url }}" alt="{{ $article->title }}"
-                                                class="img-fluid">
+                                            <img loading="lazy" src="{{ $article->thumbnail_url }}"
+                                                alt="{{ $article->title }}" class="img-fluid">
                                         </a>
                                     </div>
                                     <div class="artikel-content">

@@ -42,7 +42,7 @@
                     @foreach (session('converted_images') as $image)
                         <div class="convert-result-item">
                             <div class="convert-result-image">
-                                <img src="{{ $image['path'] }}" alt="Converted WebP"
+                                <img loading="lazy" src="{{ $image['path'] }}" alt="Converted WebP"
                                     onerror="this.onerror=null; this.src='{{ asset('images/placeholder.svg') }}';">
                             </div>
                             <p class="convert-result-filename">{{ $image['name'] }}</p>
@@ -66,7 +66,7 @@
 
                 <div class="convert-result">
                     <div class="convert-result-image">
-                        <img src="{{ session('webp_path') }}" alt="Converted WebP"
+                        <img loading="lazy" src="{{ session('webp_path') }}" alt="Converted WebP"
                             onerror="this.onerror=null; this.src='{{ asset('images/placeholder.svg') }}'; console.log('Gambar tidak dapat dimuat:', '{{ session('webp_path') }}');">
                     </div>
                     <div class="convert-result-info">

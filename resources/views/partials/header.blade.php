@@ -2,7 +2,7 @@
     <div class="header-container">
         <div class="header-wrapper">
             <a href="{{ route('welcome') }}" class="header-brand">
-                <img src="{{ asset('images/logo.png') }}" alt="Boasfar Convert Logo" class="header-logo">
+                <img loading="lazy" src="{{ asset('images/logo.png') }}" alt="Boasfar Convert Logo" class="header-logo">
             </a>
 
             @guest
@@ -37,7 +37,8 @@
                 <div class="header-user">
                     <div class="header-dropdown" x-data="{ open: false }">
                         <button @click="open = !open" class="header-user-btn">
-                            <img src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&background=8B5CF6&color=fff"
+                            <img loading="lazy"
+                                src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&background=8B5CF6&color=fff"
                                 alt="{{ Auth::user()->name }}" class="header-user-avatar">
                             <span>{{ Auth::user()->name }}</span>
                             <svg xmlns="http://www.w3.org/2000/svg" class="header-dropdown-arrow" viewBox="0 0 20 20"
@@ -54,7 +55,8 @@
                             x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
                             style="display: none;">
                             <div class="header-dropdown-header">
-                                <img src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&background=8B5CF6&color=fff&size=100"
+                                <img loading="lazy"
+                                    src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&background=8B5CF6&color=fff&size=100"
                                     alt="{{ Auth::user()->name }}" class="header-dropdown-profile">
                                 <div class="header-dropdown-info">
                                     <span class="header-dropdown-name">{{ Auth::user()->name }}</span>
@@ -158,7 +160,8 @@
                     </div>
                 @else
                     <div class="header-mobile-user">
-                        <img src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&background=8B5CF6&color=fff"
+                        <img loading="lazy"
+                            src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&background=8B5CF6&color=fff"
                             alt="{{ Auth::user()->name }}" class="header-avatar">
                         <div class="header-user-info">
                             <span class="header-user-name">{{ Auth::user()->name }}</span>

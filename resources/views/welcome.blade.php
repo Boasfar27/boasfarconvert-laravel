@@ -18,7 +18,7 @@
                         </div>
                     </div>
                     <div class="hero-image" data-aos="fade-left">
-                        {{-- <img src="{{ asset('images/amico.webp') }}" alt="Boasfar Convert Platform"> --}}
+                        {{-- <img loading="lazy" src="{{ asset('images/amico.webp') }}" alt="Boasfar Convert Platform"> --}}
                         <div class="floating-card card-1">
                             <div class="card-icon">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -283,7 +283,7 @@
                         </div>
                     </div>
                     <div class="cta-image">
-                        <img src="{{ asset('images/cuate.webp') }}" alt="Boasfar Convert Platform">
+                        <img loading="lazy" src="{{ asset('images/cuate.webp') }}" alt="Boasfar Convert Platform">
                     </div>
                 </div>
             </div>
@@ -332,7 +332,7 @@
                                 @if ($i < $latestArticles->count())
                                     <div class="artikel-image">
                                         <a href="{{ route('artikel.show', $latestArticles[$i]->slug) }}">
-                                            <img src="{{ $latestArticles[$i]->thumbnail_url }}"
+                                            <img loading="lazy" src="{{ $latestArticles[$i]->thumbnail_url }}"
                                                 alt="{{ $latestArticles[$i]->title }}" class="img-fluid">
                                         </a>
                                     </div>
@@ -356,7 +356,7 @@
                                 @else
                                     <div class="artikel-image">
                                         <a href="{{ route('artikel.index') }}">
-                                            <img src="{{ asset('images/' . $placeholders[$i]['image']) }}"
+                                            <img loading="lazy" src="{{ asset('images/' . $placeholders[$i]['image']) }}"
                                                 alt="{{ $placeholders[$i]['title'] }}" class="img-fluid">
                                         </a>
                                     </div>

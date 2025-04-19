@@ -22,7 +22,8 @@
                         </div>
 
                         <div class="bc-article-featured-image">
-                            <img src="{{ $article->thumbnail_url }}" alt="{{ $article->title }}" class="img-fluid">
+                            <img loading="lazy" src="{{ $article->thumbnail_url }}" alt="{{ $article->title }}"
+                                class="img-fluid">
                         </div>
 
                         <div class="bc-article-body">
@@ -76,8 +77,8 @@
                                 <div class="bc-artikel-card h-100 shadow-sm">
                                     <div class="bc-artikel-image">
                                         <a href="{{ route('artikel.show', $related->slug) }}">
-                                            <img src="{{ $related->thumbnail_url }}" alt="{{ $related->title }}"
-                                                class="img-fluid">
+                                            <img loading="lazy" src="{{ $related->thumbnail_url }}"
+                                                alt="{{ $related->title }}" class="img-fluid">
                                         </a>
                                     </div>
                                     <div class="bc-artikel-content">
