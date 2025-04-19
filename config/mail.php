@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'default' => env('MAIL_MAILER', 'log'),
+    'default' => env('MAIL_MAILER', 'smtp'),
 
     /*
     |--------------------------------------------------------------------------
@@ -45,8 +45,10 @@ return [
             'port' => env('MAIL_PORT', 2525),
             'username' => env('MAIL_USERNAME'),
             'password' => env('MAIL_PASSWORD'),
-            'timeout' => null,
+            'timeout' => 30,
             'local_domain' => env('MAIL_EHLO_DOMAIN', parse_url(env('APP_URL', 'http://localhost'), PHP_URL_HOST)),
+            'verify_peer' => env('MAIL_VERIFY_SSL', true),
+            'auth_mode' => env('MAIL_AUTH_MODE', null),
         ],
 
         'ses' => [
@@ -83,6 +85,7 @@ return [
             'transport' => 'failover',
             'mailers' => [
                 'smtp',
+                'sendmail',
                 'log',
             ],
         ],

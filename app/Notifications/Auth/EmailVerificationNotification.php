@@ -3,15 +3,15 @@
 namespace App\Notifications\Auth;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Log;
 
-class EmailVerificationNotification extends Notification implements ShouldQueue
+class EmailVerificationNotification extends Notification
 {
     use Queueable;
 
@@ -57,6 +57,12 @@ class EmailVerificationNotification extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         $verificationUrl = $this->verificationUrl($notifiable);
+        
+        // Log untuk debugging di production
+        Log::info('Mengirim email verifikasi', [
+            'email' => $notifiable->email,
+            'verification_url' => $verificationUrl
+        ]);
 
         if (static::$toMailCallback) {
             return call_user_func(static::$toMailCallback, $notifiable, $verificationUrl);
@@ -90,7 +96,7 @@ class EmailVerificationNotification extends Notification implements ShouldQueue
             return call_user_func(static::$createUrlCallback, $notifiable);
         }
 
-        return URL::temporarySignedRoute(
+        $url = URL::temporarySignedRoute(
             'verification.verify',
             Carbon::now()->addMinutes(Config::get('auth.verification.expire', 60)),
             [
@@ -98,6 +104,11 @@ class EmailVerificationNotification extends Notification implements ShouldQueue
                 'hash' => sha1($notifiable->getEmailForVerification()),
             ]
         );
+        
+        // Log URL untuk debugging
+        Log::info('URL Verifikasi dibuat', ['url' => $url]);
+        
+        return $url;
     }
 
     /**

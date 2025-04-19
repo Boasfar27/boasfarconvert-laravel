@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Notifications\Auth\EmailVerificationNotification;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class User extends Authenticatable implements FilamentUser, MustVerifyEmail
 {
@@ -187,11 +189,31 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
 
     /**
      * Send the email verification notification.
-     *
+     * 
      * @return void
      */
     public function sendEmailVerificationNotification()
     {
-        $this->notify(new EmailVerificationNotification);
+        try {
+            $this->notify(new EmailVerificationNotification);
+            Log::info('Email verifikasi berhasil dikirim', ['user_id' => $this->id, 'email' => $this->email]);
+        } catch (\Exception $e) {
+            Log::error('Gagal mengirim email verifikasi', [
+                'user_id' => $this->id, 
+                'email' => $this->email,
+                'error' => $e->getMessage()
+            ]);
+            
+            // Fallback: Coba kirim email via cara alternatif jika konfigurasi utama gagal
+            try {
+                Mail::to($this->email)->send(new \App\Mail\EmailVerification($this));
+                Log::info('Email verifikasi berhasil dikirim via fallback', ['user_id' => $this->id]);
+            } catch (\Exception $e2) {
+                Log::error('Fallback pengiriman email juga gagal', [
+                    'user_id' => $this->id,
+                    'error' => $e2->getMessage()
+                ]);
+            }
+        }
     }
 }
