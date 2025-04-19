@@ -63,9 +63,7 @@ Route::middleware('auth')->group(function () {
     
     // User routes
     Route::middleware(['verified', CheckRole::class . ':user,premium,admin'])->group(function () {
-        Route::get('/convert', function () {
-            return view('convert.index');
-        })->name('convert.index');
+        Route::get('/convert', [ConvertController::class, 'index'])->name('convert.index');
         
         // Image conversion
         Route::get('/convert/image', [ConvertController::class, 'showImageForm'])->name('convert.image.form');
@@ -99,8 +97,8 @@ Route::middleware('auth')->group(function () {
     */
 });
 
-// PDF and Word conversion routes (restricted to premium and admin users only)
-Route::middleware(CheckRole::class . ':premium,admin')->group(function () {
+// PDF and Word conversion routes (with cloud options) - Premium/Admin only
+Route::middleware(['auth', 'verified', CheckRole::class . ':premium,admin'])->group(function () {
     Route::get('/convert/pdf-to-word', [ConvertController::class, 'showPdfToWordForm'])->name('convert.pdf-to-word.form');
     Route::post('/convert/pdf-to-word', [ConvertController::class, 'pdfToWord'])->name('convert.pdf-to-word');
     Route::post('/convert/pdf-to-word/cloud', [ConvertController::class, 'pdfToWordCloudConvert'])->name('convert.pdf-to-word.cloud');
@@ -109,8 +107,6 @@ Route::middleware(CheckRole::class . ':premium,admin')->group(function () {
     Route::post('/convert/word-to-pdf', [ConvertController::class, 'wordToPdf'])->name('convert.word-to-pdf');
     Route::post('/convert/word-to-pdf/cloud', [ConvertController::class, 'wordToPdfCloudConvert'])->name('convert.word-to-pdf.cloud');
 });
-
-Route::get('/convert/download-all-images', [ConvertController::class, 'downloadAllImages'])->name('convert.download-all-images');
 
 // Test route for 404 error page
 Route::get('/test-404', function () {
