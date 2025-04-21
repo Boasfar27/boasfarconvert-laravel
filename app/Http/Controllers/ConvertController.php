@@ -40,9 +40,14 @@ class ConvertController extends Controller
      */
     public function convertImage(Request $request)
     {
+        // Atur batas memori dan eksekusi
+        ini_set('max_execution_time', 300);
+        ini_set('memory_limit', '1024M');
+        ini_set('post_max_size', '8M');
+        
         $request->validate([
             'images' => 'required|array|max:5',
-            'images.*' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'images.*' => 'required|image|mimes:jpeg,png,jpg,gif|max:8192',
         ]);
 
         // Check if user can convert
@@ -174,6 +179,11 @@ class ConvertController extends Controller
      */
     public function pdfToWord(Request $request)
     {
+        // Atur batas memori dan eksekusi
+        ini_set('max_execution_time', 300);
+        ini_set('memory_limit', '1024M');
+        ini_set('post_max_size', '8M');
+        
         // Additional check for role 0 users to prevent direct access
         if (auth()->user()->isUser()) {
             return redirect()->route('convert.index')->with('error', 'Fitur ini hanya tersedia untuk pengguna premium.');
@@ -342,6 +352,11 @@ class ConvertController extends Controller
      */
     public function wordToPdf(Request $request)
     {
+        // Atur batas memori dan eksekusi
+        ini_set('max_execution_time', 300);
+        ini_set('memory_limit', '1024M');
+        ini_set('post_max_size', '8M');
+        
         // Additional check for role 0 users to prevent direct access
         if (auth()->user()->isUser()) {
             return redirect()->route('convert.index')->with('error', 'Fitur ini hanya tersedia untuk pengguna premium.');
@@ -567,6 +582,11 @@ class ConvertController extends Controller
      */
     public function wordToPdfCloudConvert(Request $request)
     {
+        // Atur batas memori dan eksekusi
+        ini_set('max_execution_time', 300);
+        ini_set('memory_limit', '1024M');
+        ini_set('post_max_size', '8M');
+        
         // Additional check for role 0 users to prevent direct access
         if (auth()->user()->isUser()) {
             return redirect()->route('convert.index')->with('error', 'Fitur ini hanya tersedia untuk pengguna premium.');
@@ -702,6 +722,11 @@ class ConvertController extends Controller
      */
     public function pdfToWordCloudConvert(Request $request)
     {
+        // Atur batas memori dan eksekusi
+        ini_set('max_execution_time', 300);
+        ini_set('memory_limit', '1024M');
+        ini_set('post_max_size', '8M');
+        
         // Additional check for role 0 users to prevent direct access
         if (auth()->user()->isUser()) {
             return redirect()->route('convert.index')->with('error', 'Fitur ini hanya tersedia untuk pengguna premium.');
